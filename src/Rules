@@ -1,0 +1,14 @@
+I/ Name
+    1/ Folder name: low case
+    2/ File name: upper case (except index.js)
+    3/ The new class: upper case
+II/ Test component
+    1/ Only call tested component in demo file
+III/ Process state
+    1/ Write all component
+    2/ Write all container with using component
+    3/ Route page
+    4/ Action, reducer to use the data
+IV/ Writing
+    1/ Write all component base on the Base... .js file
+V/ Commit code ...
