@@ -19,5 +19,4 @@ V/ Commit code
     5/ Notice to that member after finish
     6/ That member has to go on branch master and merge with his branch: git merge branchname
     7/ Delete .idea/workspace.xml before commit and turn off al IDE.
-    8/ Commit and push code to branch master.
-    9/ All other members pull new code from branch to their branch and branch master.: git pull origin master
+    8/ All other members pull new code from branch to their branch and branch master.: git pull origin master
