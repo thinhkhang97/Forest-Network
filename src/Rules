@@ -11,4 +11,11 @@ III/ Process state
     4/ Action, reducer to use the data
 IV/ Writing
     1/ Write all component base on the Base... .js file
-V/ Commit code ...
+V/ Commit code
+    1/ Write code on your branch
+    2/ Commit code to your branch
+    3/ Others member pull the new code with corresponding branch: checkout code, pull new code
+    4/ Review the new code on that member branch
+    5/ Notice to that member after finish
+    6/ That member has to go on branch master and merge with his branch
+    7/ All other members pull new code from branch to their branch and branch master.
