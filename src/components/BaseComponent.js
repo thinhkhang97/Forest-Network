@@ -1,5 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+    styleName:{}
+}
 
 class BaseComponent extends React.Component {
 
@@ -15,6 +21,10 @@ class BaseComponent extends React.Component {
     }
 }
 
+BaseComponent.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = state => ({
 });
 
@@ -24,4 +34,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BaseComponent);
+)(withStyles(styles)(BaseComponent));
