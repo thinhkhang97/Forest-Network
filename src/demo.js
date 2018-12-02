@@ -10,13 +10,13 @@ class Demo extends React.Component {
     render(){
         return(
            <div>
-               <SignIn/>
-               <Register/>
+               {/*<SignIn/>*/}
+               {/*<Register/>*/}
+               {/*<Navigation/>*/}
+               {/*<LinkToMyWall/>*/}
+               {/*<Post/>*/}
+               {/*<PostInput/>*/}
                <CoverWall/>
-               <Navigation/>
-               <LinkToMyWall/>
-               <Post/>
-               <PostInput/>
            </div>
         )
     }
