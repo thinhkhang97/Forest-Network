@@ -70,6 +70,15 @@ const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
     },
+    avatar2: {
+        backgroundColor: red[150],
+        width: 30,
+        height: 30,
+    },
+    button: {
+        width: 10,
+        height: 10
+    }
 });
 
 class Post extends React.Component {
@@ -131,9 +140,9 @@ class Post extends React.Component {
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <List className={classes.root}>
                         <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                            </ListItemAvatar>
+                            <Avatar aria-label="Recipe" className={classes.avatar}>
+                                K
+                            </Avatar>
                             <ListItemText
                                 primary="Nguyễn Thịnh Khang"
                                 secondary={
@@ -147,9 +156,9 @@ class Post extends React.Component {
                             />
                         </ListItem>
                         <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </ListItemAvatar>
+                            <Avatar aria-label="Recipe" className={classes.avatar}>
+                                K
+                            </Avatar>
                             <ListItemText
                                 primary="Summer BBQ"
                                 secondary={
@@ -163,9 +172,9 @@ class Post extends React.Component {
                             />
                         </ListItem>
                         <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/3.jpg" />
-                            </ListItemAvatar>
+                            <Avatar aria-label="Recipe" className={classes.avatar}>
+                                K
+                            </Avatar>
                             <ListItemText
                                 primary="Oui Oui"
                                 secondary={
@@ -179,17 +188,24 @@ class Post extends React.Component {
                             />
                         </ListItem>
                     </List>
-                    <div>
-                        <FormControl className={classes.margin} style={{marginLeft: 35}}>
+                    <div style={{flex: 1}}>
+                        <FormControl className={classes.margin} style={{marginLeft: 35, display: "flex", flexDirection: "row"}}>
                             <InputLabel htmlFor="input-with-icon-adornment">Write your comment</InputLabel>
                             <Input
                                 id="input-with-icon-adornment"
                                 startAdornment={
                                     <InputAdornment position="start">
-                                        <AccountCircle />
+                                        <Avatar aria-label="Recipe" className={classes.avatar2}>
+                                            K
+                                        </Avatar>
                                     </InputAdornment>
                                 }
                             />
+                            <div>
+                                <IconButton >
+                                    <MoreVertIcon />
+                                </IconButton>
+                            </div>
                         </FormControl>
                     </div>
                 </Collapse>

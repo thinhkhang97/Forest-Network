@@ -53,50 +53,50 @@ const styles = theme => ({
     }
 });
 
-function SignIn(props) {
-    const { classes } = props;
-
-    return (
-        <div>
-            <main className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    <form className={classes.form}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="email">Email Address</InputLabel>
-                            <Input id="email" name="email" autoComplete="email" autoFocus />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input name="password" type="password" id="password" autoComplete="current-password" />
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
+class SignIn extends React.Component{
+    render(){
+        return (
+            <div>
+                <main className={this.props.classes.main}>
+                    <CssBaseline />
+                    <Paper className={this.props.classes.paper}>
+                        <Avatar className={this.props.classes.avatar}>
+                            <LockIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
                             Sign in
-                        </Button>
-                        <div className={classes.register} onClick={Register} >
-                            Register
-                        </div>
-                    </form>
-                </Paper>
-            </main>
-        </div>
-    );
+                        </Typography>
+                        <form className={this.props.classes.form}>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input name="password" type="password" id="password" autoComplete="current-password" />
+                            </FormControl>
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={this.props.classes.submit}
+                            >
+                                Sign in
+                            </Button>
+                            <Button fullWidth variant="outlined" color="primary" className={this.props.classes.submit}>
+                                Sign up
+                            </Button>
+                        </form>
+                    </Paper>
+                </main>
+            </div>
+        );
+    }
 }
 
 SignIn.propTypes = {

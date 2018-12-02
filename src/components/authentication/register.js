@@ -53,7 +53,7 @@ class Register extends React.Component{
                         <LockIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Register
+                        SignUp
                     </Typography>
                     <form className={this.props.classes.form}>
                         <FormControl margin="normal" required fullWidth>
@@ -71,11 +71,11 @@ class Register extends React.Component{
                         <Button
                             type="submit"
                             fullWidth
-                            variant="contained"
+                            variant="contained  "
                             color="primary"
                             className={this.props.classes.submit}
                         >
-                            Register
+                            Sign up
                         </Button>
                     </form>
                 </Paper>

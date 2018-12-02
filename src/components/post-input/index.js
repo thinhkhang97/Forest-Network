@@ -10,7 +10,7 @@ import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
 import Button from '@material-ui/core/Button';
-
+import Fab from '@material-ui/core/Fab';
 
 const styles = theme => ({
     avatar: {
@@ -46,22 +46,26 @@ const styles = theme => ({
     },
 });
 
-function LetterAvatars(props) {
+class LetterAvatars extends React.Component{
 
-    const { classes } = props;
-    return (
-        <div className="row">
-            <Grid container justify="left" alignItems="left" style={{width:30, height: 30, marginLeft: 50, marginRight: 30}}>
-                <Avatar className={classes.avatar}>H</Avatar>
-            </Grid>
-            <textarea name="texts" id="exampleTextarea" className="form-control" placeholder="Write what you wish" defaultValue={""} style={{width:400, height: 50, marginTop: 8}}/>
-            <Icon style={{width:40, height: 50, marginTop: 14, fontSize: 30, marginLeft: 12}}>image</Icon>
-            <Typography variant="srOnly">Create a user</Typography>
-            <Button variant="contained" color="primary" className={classes.button}>
-                Publish
-            </Button>
-        </div>
-    );
+    render(){
+        return (
+            <div className="row">
+                <Grid container justify="left" alignItems="left" style={{width:30, height: 30, marginLeft: 50, marginRight: 30}}>
+                    <Avatar className={this.props.classes.avatar}>H</Avatar>
+                </Grid>
+                <textarea name="texts" id="exampleTextarea" className="form-control" placeholder="Write what you wish" defaultValue={""} style={{width:400, height: 50, marginTop: 8}}/>
+                <Fab color="blue" aria-label="Edit" className={this.props.classes.fab} style={{marginLeft: 20, marginTop: 10, width: 40, height: 40}}>
+                    <Icon>image_icon</Icon>
+                </Fab>
+                <Typography variant="srOnly">Create a user</Typography>
+                <Button variant="contained" color="primary" className={this.props.classes.button}>
+                    Publish
+                </Button>
+            </div>
+        );
+    }
+
 }
 
 LetterAvatars.propTypes = {

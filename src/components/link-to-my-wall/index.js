@@ -9,7 +9,7 @@ class LinkToMyWall extends React.Component {
     render() {
         return (
             <div className="profile-card">
-                <img src="images/users/user-1.jpg" alt="user" className="profile-photo" />
+                <img src="images/bitcoin.jpg" alt="user" className="profile-photo" />
                 <h5><a href="timeline.html" className="text-white">Sarah Cruiz</a></h5>
                 <a href="#" className="text-white"><i className="ion ion-android-person-add" /> 1,299 followers</a>
             </div>

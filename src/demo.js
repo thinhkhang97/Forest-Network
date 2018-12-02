@@ -14,11 +14,11 @@ class Demo extends React.Component {
     render() {
         return (
             <div>
-                {/*<PostInput/>*/}
-                {/*<Post/>*/}
-                {/*<LinkToMyWall/>*/}
-                {/*<Navigation/>*/}
-                {/*<SignIn/>*/}
+                <PostInput/>
+                <Post/>
+                <LinkToMyWall/>
+                <Navigation/>
+                <SignIn/>
                 <Register/>
             </div>
         )
