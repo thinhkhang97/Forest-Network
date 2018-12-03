@@ -189,7 +189,7 @@ class Post extends React.Component {
                             />
                         </ListItem>
                     </List>
-                    <div style={{flex: 1}}>
+                    <div style={{flex: 1, width: "100%"}}>
                         <FormControl className={classes.margin} style={{marginLeft: 35, display: "flex", flexDirection: "row"}}>
                             <InputLabel htmlFor="input-with-icon-adornment">Write your comment</InputLabel>
                             <Input

@@ -5,7 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Grid from '@material-ui/core/Grid';
-
+import AddIcon from '@material-ui/icons/Add';
+import ImageIcon from '@material-ui/icons/Image';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
@@ -58,11 +59,11 @@ class PostInPut extends React.Component{
                 </Grid>
                 <textarea name="texts" id="exampleTextarea" className="form-control" placeholder="Write what you wish" defaultValue={""} style={{width:400, height: 50, marginTop: 8}}/>
                 <Fab color="blue" aria-label="Edit" className={this.props.classes.fab} style={{marginLeft: 20, marginTop: 10, width: 40, height: 40}}>
-                    <Icon>image_icon</Icon>
+                    <ImageIcon/>
                 </Fab>
                 <Typography variant="srOnly">Create a user</Typography>
                 <Button variant="contained" color="primary" className={this.props.classes.button}>
-                    Publish
+                    public
                 </Button>
             </div>
         );
