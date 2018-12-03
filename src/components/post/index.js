@@ -34,7 +34,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const styles = theme => ({
     card: {
-        maxWidth: 600,
+        width: '100%'
     },
     media: {
         height: 0,
@@ -62,7 +62,6 @@ const styles = theme => ({
     },
     root: {
         width: '100%',
-        maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
     inline: {
@@ -79,6 +78,8 @@ const styles = theme => ({
     button: {
         width: 10,
         height: 10
+    },
+    img: {
     }
 });
 
@@ -112,7 +113,7 @@ class Post extends React.Component {
                     className={classes.media}
                     // image="/static/images/cards/paella.jpg"
                     title="Paella dish"
-                    src="../public/images/bitcoin.jpg"
+                    image='https://kenh14cdn.com/2018/6/27/photo-1-1530035696818119569395.jpg'
                 />
                 <CardContent>
                     <Typography component="p">
@@ -189,25 +190,25 @@ class Post extends React.Component {
                             />
                         </ListItem>
                     </List>
-                    <div style={{flex: 1, width: "100%"}}>
-                        <FormControl className={classes.margin} style={{marginLeft: 35, display: "flex", flexDirection: "row"}}>
+                    <div style={{display: 'flex', width: "100%", paddingLeft: 20, paddingRight: 20, paddingBottom: 20,}}>
+                        <FormControl fullWidth={true}>
                             <InputLabel htmlFor="input-with-icon-adornment">Write your comment</InputLabel>
                             <Input
                                 id="input-with-icon-adornment"
                                 startAdornment={
                                     <InputAdornment position="start">
-                                        <Avatar aria-label="Recipe" className={classes.avatar2}>
+                                        <Avatar style={{width: 20, height: 20}} aria-label="Recipe" className={classes.avatar2}>
                                             K
                                         </Avatar>
                                     </InputAdornment>
                                 }
                             />
-                            <div>
-                                <IconButton >
-                                    <MoreVertIcon />
-                                </IconButton>
-                            </div>
                         </FormControl>
+                        <div>
+                            <IconButton >
+                                <MoreVertIcon />
+                            </IconButton>
+                        </div>
                     </div>
                 </Collapse>
             </Card>

@@ -85,6 +85,9 @@ const styles = theme => ({
             display: 'none',
         },
     },
+    colorPrimary: {
+        backgroundColor: '#231F20'
+    }
 });
 
 class Navigation extends React.Component {
@@ -156,7 +159,9 @@ class Navigation extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="fixed" color='primary' classes={{
+                    colorPrimary: classes.colorPrimary
+                }}>
                     <Toolbar>
                         {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">*/}
                             {/*<MenuIcon />*/}
