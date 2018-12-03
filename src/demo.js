@@ -8,6 +8,7 @@ import Post from './components/post/index'
 import PostInput from './components/post-input/index'
 import EditProfile from './components/edit-profile';
 import EditMenu from './components/edit-menu'
+import MyWall from './container/mywall'
 class Demo extends React.Component {
     render(){
         return(
@@ -20,7 +21,8 @@ class Demo extends React.Component {
                {/*<PostInput/>*/}
                {/*<CoverWall/>*/}
                {/*<EditMenu/>*/}
-               <EditProfile/>
+               {/*<EditProfile/>*/}
+               <MyWall/>
            </div>
         )
     }

@@ -8,11 +8,12 @@ const styles = {
         flexGrow: 1,
     },
     menuContainer: {
-        width: 1140,
-        height: 500,
-        maxHeight: '50%',
+        width: '100%',
+        height: 300,
+        maxHeight: '30%',
         minHeight: '20%',
-        position: 'relative'
+        position: 'relative',
+        borderRadius: 5,
     },
     avatar: {
         height: 200,
@@ -32,7 +33,8 @@ const styles = {
         bottom: 50,
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginRight: 10,
     },
     button:{
       color:'white',
@@ -107,7 +109,7 @@ class CoverWall extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div style={{marginLeft: 20}}>
                         <img className={this.classes.avatar} src='https://i.ytimg.com/vi/nUioInZvGWo/maxresdefault.jpg'/>
                     </div>
                 </div>
