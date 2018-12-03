@@ -7,6 +7,8 @@ import LinkToMyWall from './components/link-to-my-wall/index'
 import Post from './components/post/index'
 import PostInput from './components/post-input/index'
 import EditMenu from './components/edit-menu'
+
+import NewsFeed from './container/newsfeed/index'
 class Demo extends React.Component {
     render(){
         return(
@@ -18,7 +20,8 @@ class Demo extends React.Component {
                {/*<Post/>*/}
                {/*<PostInput/>*/}
                {/*<CoverWall/>*/}
-               <EditMenu/>
+               {/*<EditMenu/>*/}
+               <NewsFeed/>
            </div>
         )
     }

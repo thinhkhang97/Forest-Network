@@ -34,10 +34,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const styles = theme => ({
     card: {
-        maxWidth: 400,
+        maxWidth: 600,
     },
     media: {
         height: 0,
+        paddingLeft: 500,
         paddingTop: '56.25%', // 16:9
     },
     actions: {

@@ -37,16 +37,18 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-        width: 100,
-        height: 50,
-        borderRadius: 30
+        width: 70,
+        height: 40,
+        borderRadius: 30,
+        marginTop: 10,
+        fontSize: 14
     },
     input: {
         display: 'none',
     },
 });
 
-class LetterAvatars extends React.Component{
+class PostInPut extends React.Component{
 
     render(){
         return (
@@ -68,8 +70,8 @@ class LetterAvatars extends React.Component{
 
 }
 
-LetterAvatars.propTypes = {
+PostInPut.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LetterAvatars);
+export default withStyles(styles)(PostInPut);
