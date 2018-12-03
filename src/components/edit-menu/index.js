@@ -61,7 +61,7 @@ class EditMenu extends React.Component {
                             primary: this.classes.listTextItem,
                         }}/>
                     </ListItem>
-                    <Divider />
+                    {/*<Divider />*/}
                     <ListItem button className={this.classes.listButtonItem}>
                         <ListItemIcon>
                             <LockIcon />
@@ -70,7 +70,7 @@ class EditMenu extends React.Component {
                             primary: this.classes.listTextItem
                         }}/>
                     </ListItem>
-                    <Divider />
+                    {/*<Divider />*/}
                 </List>
             </div>
         )

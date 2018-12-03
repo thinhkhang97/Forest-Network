@@ -5,6 +5,8 @@ import Navigation from '../../components/navigation';
 import CoverWall from '../../components/cover-wall';
 import PostInput from '../../components/post-input';
 import Post from '../../components/post';
+import EditMenu from '../../components/edit-menu';
+import EditProfile from '../../components/edit-profile';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
@@ -21,10 +23,10 @@ const styles = {
         display: 'flex',
     },
     partLeft: {
-        width: '20%',
+        width: '25%',
     },
     partMid: {
-        width: '60%',
+        width: '55%',
         paddingLeft: 10,
         paddingRight: 10
     },
@@ -55,18 +57,21 @@ class MyWall extends React.Component {
                         <div className={this.classes.partLeft}>
                             <h3 style={{textAlign: 'center', color: '#27aae1'}}>Nancy</h3>
                             <p style={{textAlign: 'center'}}>Everything is fine</p>
+
+                            <EditMenu/>
                         </div>
                         <div className={this.classes.partMid}>
-                            <PostInput/>
-                                <div className={this.classes.line}/>
-                            <Post/>
-                                <div className={this.classes.line}/>
-                            <Post/>
-                                <div className={this.classes.line}/>
-                            <Post/>
+                            {/*<PostInput/>*/}
+                                {/*<div className={this.classes.line}/>*/}
+                            {/*<Post/>*/}
+                                {/*<div className={this.classes.line}/>*/}
+                            {/*<Post/>*/}
+                                {/*<div className={this.classes.line}/>*/}
+                            {/*<Post/>*/}
+                            <EditProfile/>
                         </div>
                         <div className={this.classes.partRight}>
-                            part right
+                            {/*part right*/}
                         </div>
                     </div>
                 </div>

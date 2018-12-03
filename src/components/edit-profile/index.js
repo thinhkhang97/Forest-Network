@@ -18,7 +18,7 @@ import Button from "@material-ui/core/Button/Button";
 const styles = {
     editProfileContainer: {
         height: '100%',
-        width: '50%',
+        width: '100%',
         color: '#6d6e71',
         fontSize: ' 13px'
 
@@ -56,7 +56,15 @@ const styles = {
         '&:hover': {
             backgroundColor: '#2e6da4'
         },
+        marginBottom: 10,
         width: '100%'
+    },
+    resize:{
+        fontSize: 13
+    },
+    underline:{
+        borderColor: '#f1f2f2',
+        borderWidth: 1,
     }
 }
 
@@ -110,7 +118,7 @@ class EditProfile extends React.Component {
         return (
             <div className={this.classes.editProfileContainer}>
                 <div className={this.classes.blockTitle}>
-                    <h4 style={{fontSize: 18}}>Edit basic information</h4>
+                    <h4 style={{fontSize: 20, textAlign: 'center'}}>Edit basic information</h4>
                     <div className={this.classes.line}/>
                     <p>
                         At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
@@ -129,7 +137,10 @@ class EditProfile extends React.Component {
                                 // onChange={this.handleChange('name')}
                                 margin="none"
                                 fullWidth={true}
-                                style={{fontSize: '13px !important'}}
+                                InputProps={{classes:{
+                                    input: this.classes.resize,
+                                        underline: this.classes.underline,
+                                }}}
                             />
                         </div>
                         <div className={this.classes.partRight}>
@@ -141,6 +152,9 @@ class EditProfile extends React.Component {
                                 // onChange={this.handleChange('name')}
                                 margin="none"
                                 fullWidth={true}
+                                InputProps={{classes:{
+                                        input: this.classes.resize,
+                                    }}}
                             />
                         </div>
                     </div>
@@ -152,7 +166,12 @@ class EditProfile extends React.Component {
                         // onChange={this.handleChange('name')}
                         margin="none"
                         fullWidth={true}
+                        InputProps={{classes:{
+                                input: this.classes.resize,
+                            }}}
                     />
+                    <br/>
+                    <br/>
                     <div style={{ marginTop: 10}}>
                         <b>Date of birth</b>
                     </div>
@@ -166,6 +185,10 @@ class EditProfile extends React.Component {
                                 inputProps={{
                                     name: 'day',
                                     id: 'age-simple',
+                                }}
+                                classes={{
+                                    select: this.classes.resize,
+                                    selectMenu: this.classes.resize,
                                 }}
                             >
                                 {this.generateDay()}
