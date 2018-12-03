@@ -6,6 +6,7 @@ import Navigation from './components/navigation/index'
 import LinkToMyWall from './components/link-to-my-wall/index'
 import Post from './components/post/index'
 import PostInput from './components/post-input/index'
+import EditProfile from './components/edit-profile';
 import EditMenu from './components/edit-menu'
 class Demo extends React.Component {
     render(){
@@ -18,7 +19,8 @@ class Demo extends React.Component {
                {/*<Post/>*/}
                {/*<PostInput/>*/}
                {/*<CoverWall/>*/}
-               <EditMenu/>
+               {/*<EditMenu/>*/}
+               <EditProfile/>
            </div>
         )
     }
