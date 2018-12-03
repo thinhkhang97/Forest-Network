@@ -34,10 +34,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const styles = theme => ({
     card: {
-        maxWidth: 400,
+        maxWidth: 600,
     },
     media: {
         height: 0,
+        paddingLeft: 500,
         paddingTop: '56.25%', // 16:9
     },
     actions: {
@@ -188,7 +189,7 @@ class Post extends React.Component {
                             />
                         </ListItem>
                     </List>
-                    <div style={{flex: 1}}>
+                    <div style={{flex: 1, width: "100%"}}>
                         <FormControl className={classes.margin} style={{marginLeft: 35, display: "flex", flexDirection: "row"}}>
                             <InputLabel htmlFor="input-with-icon-adornment">Write your comment</InputLabel>
                             <Input

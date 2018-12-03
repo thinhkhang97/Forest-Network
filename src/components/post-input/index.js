@@ -5,7 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Grid from '@material-ui/core/Grid';
-
+import AddIcon from '@material-ui/icons/Add';
+import ImageIcon from '@material-ui/icons/Image';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 
@@ -37,29 +38,55 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-        width: 100,
-        height: 50,
-        borderRadius: 30
+        width: 70,
+        height: 40,
+        borderRadius: 30,
+        marginTop: 10,
+        fontSize: 14
     },
     input: {
         display: 'none',
     },
+    primaryButton: {
+        backgroundColor: '#27aae1',
+        borderRadius: 18,
+        textTransform: 'capitalize',
+        marginLeft: 10,
+        marginRight: 10,
+        '&:hover': {
+            backgroundColor: '#2e6da4'
+        },
+        maxHeight: 21,
+    },
+    row: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    fab: {
+        minWidth: 40,
+        height: 40
+    }
 });
 
-class LetterAvatars extends React.Component{
+class PostInPut extends React.Component{
 
     render(){
         return (
-            <div className="row">
-                <Grid container justify="left" alignItems="left" style={{width:30, height: 30, marginLeft: 50, marginRight: 30}}>
-                    <Avatar className={this.props.classes.avatar}>H</Avatar>
-                </Grid>
-                <textarea name="texts" id="exampleTextarea" className="form-control" placeholder="Write what you wish" defaultValue={""} style={{width:400, height: 50, marginTop: 8}}/>
-                <Fab color="blue" aria-label="Edit" className={this.props.classes.fab} style={{marginLeft: 20, marginTop: 10, width: 40, height: 40}}>
-                    <Icon>image_icon</Icon>
+            <div className={this.props.classes.row}>
+                <Avatar className={this.props.classes.avatar}>H</Avatar>
+                <textarea name="texts" id="exampleTextarea"
+                          className="form-control"
+                          placeholder="Write what you wish" defaultValue={""}
+                          style={{marginRight: 10}}
+                />
+                <Fab className={this.props.classes.fab}>
+                    <ImageIcon/>
                 </Fab>
-                <Typography variant="srOnly">Create a user</Typography>
-                <Button variant="contained" color="primary" className={this.props.classes.button}>
+
+                <Button variant='contained' color='primary' className={this.props.classes.primaryButton}>
                     Publish
                 </Button>
             </div>
@@ -68,8 +95,8 @@ class LetterAvatars extends React.Component{
 
 }
 
-LetterAvatars.propTypes = {
+PostInPut.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LetterAvatars);
+export default withStyles(styles)(PostInPut);
