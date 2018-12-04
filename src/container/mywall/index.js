@@ -49,15 +49,20 @@ class MyWall extends React.Component {
         console.log(this.props.match.params)
     }
 
+    getListPosts = () => {
+        return this.props.listPosts.map(post => {
+            return <div>
+                <Post post={post} />
+                <div className={this.classes.line}/>
+            </div>
+        })
+    }
+
     timeLine=()=>{
         return <div>
                 <PostInput/>
                     <div className={this.classes.line}/>
-                <Post/>
-                    <div className={this.classes.line}/>
-                <Post/>
-                    <div className={this.classes.line}/>
-                <Post/>
+                {this.getListPosts()}
             </div>
     }
 
@@ -93,7 +98,7 @@ MyWall.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    page: state.myWallPage
+    listPosts: state.posts
 });
 
 const mapDispatchToProps = {

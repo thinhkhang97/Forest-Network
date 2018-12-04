@@ -117,10 +117,10 @@ class Post extends React.Component {
         const { classes } = this.props;
 
         return (
-            <Card className={classes.card}>
+            <Card className={this.props.classes.card}>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
+                        <Avatar aria-label="Recipe" className={this.props.classes.avatar}>
                             {this.props.post.avatar}
                         </Avatar>
                     }
@@ -133,7 +133,7 @@ class Post extends React.Component {
                     subheader={this.props.post.datePost}
                 />
                 <CardMedia
-                    className={classes.media}
+                    className={this.props.classes.media}
                     // image="/static/images/cards/paella.jpg"
                     title="Paella dish"
                     image='https://kenh14cdn.com/2018/6/27/photo-1-1530035696818119569395.jpg'
@@ -143,7 +143,7 @@ class Post extends React.Component {
                         {this.props.post.status}
                     </Typography>
                 </CardContent>
-                <CardActions className={classes.actions} disableActionSpacing>
+                <CardActions className={this.props.classes.actions} disableActionSpacing>
                     <IconButton aria-label="Add to favorites">
                         <FavoriteIcon />
                     </IconButton>
@@ -151,8 +151,8 @@ class Post extends React.Component {
                         <ShareIcon />
                     </IconButton>
                     <IconButton
-                        className={classnames(classes.expand, {
-                            [classes.expandOpen]: this.state.expanded,
+                        className={classnames(this.props.classes.expand, {
+                            [this.props.classes.expandOpen]: this.state.expanded,
                         })}
                         onClick={this.handleExpandClick}
                         aria-expanded={this.state.expanded}
@@ -162,7 +162,7 @@ class Post extends React.Component {
                     </IconButton>
                 </CardActions>
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <List className={classes.root}>
+                    <List className={this.props.classes.root}>
                         {this.getListComment()}
                     </List>
                     <div style={{display: 'flex', width: "100%", paddingLeft: 20, paddingRight: 20, paddingBottom: 20,}}>
