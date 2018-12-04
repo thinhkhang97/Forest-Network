@@ -60,39 +60,32 @@ class ChangePassword extends React.Component {
                                 input: this.classes.resize,
                             }}}
                     />
-                    <div className={this.classes.divideRow}>
-                        <div className={this.classes.partLeft}>
-                            <TextField
-                                id="standard-name"
-                                label="New password"
-                                // className={classes.textField}
-                                // value={this.state.name}
-                                // onChange={this.handleChange('name')}
-                                margin="none"
-                                fullWidth={true}
-                                type="password"
-                                InputProps={{classes:{
-                                    input: this.classes.resize,
-                                        underline: this.classes.underline,
-                                }}}
-                            />
-                        </div>
-                        <div className={this.classes.partRight}>
-                            <TextField
-                                id="standard-name"
-                                label="Confirm password"
-                                // className={classes.textField}
-                                // value={this.state.name}
-                                // onChange={this.handleChange('name')}
-                                margin="none"
-                                fullWidth={true}
-                                type="password"
-                                InputProps={{classes:{
-                                        input: this.classes.resize,
-                                    }}}
-                            />
-                        </div>
-                    </div>
+                <TextField
+                        id="standard-name"
+                        label="New password"
+                        // className={classes.textField}
+                        // value={this.state.name}
+                        // onChange={this.handleChange('name')}
+                        margin="none"
+                        fullWidth={true}
+                        type="password"
+                        InputProps={{classes:{
+                                input: this.classes.resize,
+                            }}}
+                    />
+                <TextField
+                        id="standard-name"
+                        label="Confirm password"
+                        // className={classes.textField}
+                        // value={this.state.name}
+                        // onChange={this.handleChange('name')}
+                        margin="none"
+                        fullWidth={true}
+                        type="password"
+                        InputProps={{classes:{
+                                input: this.classes.resize,
+                            }}}
+                    />
                 </div>
                 <Button variant='contained' color='primary' className={this.classes.primaryButton}>
                     Update Password
