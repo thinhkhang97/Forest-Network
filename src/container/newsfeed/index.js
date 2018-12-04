@@ -12,6 +12,7 @@ import PostInPut from "../../components/post-input";
 import Icon from '@material-ui/core/Icon';
 import Line from '../../components/line';
 import { Link } from 'react-router-dom';
+import Follow from "../../components/follow";
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -39,6 +40,12 @@ class NewFeed extends React.Component {
             return <Post post={post} />
         })
     }
+
+    getListFollows = () =>{
+        return this.props.listFollows.map(follow => {
+            return <Follow follow={follow}/>
+        })
+    }
     render() {
         return (
             <div className={this.classes.root}>
@@ -47,9 +54,15 @@ class NewFeed extends React.Component {
                     <div style={{ marginTop: 80 }}>
                         <Grid container spacing={24}>
                             <Grid item xs>
-                                <Link to='/mywall/timeline'>
-                                    <LinkToMyWall />
-                                </Link>
+                                <div style={{paddingBottom: 110}}>
+                                    <Link to='/mywall/timeline'>
+                                        <LinkToMyWall />
+                                    </Link>
+                                </div>
+                                <div>
+                                    <div>Follows</div>
+                                    <Follow/>
+                                </div>
                             </Grid>
                             <Grid item xs={6} >
                                 <PostInPut />
@@ -59,7 +72,12 @@ class NewFeed extends React.Component {
                                 </div>
                             </Grid>
                             <Grid item xs>
-                                <Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>
+                                {/*<Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>*/}
+                                <div>Follows</div>
+
+                               <div>
+                                   {this.getListFollows()}
+                               </div>
                             </Grid>
                         </Grid>
                     </div>
@@ -75,7 +93,8 @@ NewFeed.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    listPosts: state.posts
+    listPosts: state.posts,
+    listFollows: state.follows
 })
 
 export default connect(mapStateToProps)(withStyles(styles)(NewFeed));

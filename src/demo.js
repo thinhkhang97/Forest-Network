@@ -10,6 +10,8 @@ import EditProfile from './components/edit-profile';
 import EditMenu from './components/edit-menu'
 import MyWall from './container/mywall';
 import NewsFeed from './container/newsfeed';
+import Follow from "./components/follow";
+
 class Demo extends React.Component {
     render(){
         return(
@@ -25,6 +27,7 @@ class Demo extends React.Component {
                {/*<EditProfile/>*/}
                 {/*<MyWall/>*/}
                {/* <NewsFeed/> */}
+               {/*<Follow/>*/}
            </div>
         )
     }
