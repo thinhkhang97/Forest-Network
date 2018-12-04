@@ -42,9 +42,8 @@ class NewFeed extends React.Component {
     }
 
     getListFollows = () =>{
-        return this.props.listFollows.map(follow => {
-            return <Follow follow={follow}/>
-        })
+        console.log(this.props.listFollows);
+        return <Follow follows={this.props.listFollows}/>
     }
     render() {
         return (
@@ -57,11 +56,14 @@ class NewFeed extends React.Component {
                                 <div style={{paddingBottom: 110}}>
                                     <Link to='/mywall/timeline'>
                                         <LinkToMyWall />
+                                        
                                     </Link>
                                 </div>
-                                <div>
-                                    <div>Follows</div>
-                                    <Follow/>
+                                <div style={{position: 'fixed', width:251}}>
+                                    <div>Following</div>
+                                    <div>
+                                        {this.getListFollows()}
+                                    </div>
                                 </div>
                             </Grid>
                             <Grid item xs={6} >
@@ -73,11 +75,12 @@ class NewFeed extends React.Component {
                             </Grid>
                             <Grid item xs>
                                 {/*<Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>*/}
-                                <div>Follows</div>
-
-                               <div>
-                                   {this.getListFollows()}
-                               </div>
+                                <div style={{position: 'fixed', width:251}}>
+                                    <div>Followers</div>
+                                    <div>
+                                        {this.getListFollows()}
+                                    </div>
+                                </div>
                             </Grid>
                         </Grid>
                     </div>

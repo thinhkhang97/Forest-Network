@@ -28,45 +28,38 @@ const styles = theme => ({
 
 class Follow extends React.Component{
 
+    constructor(props){
+        super(props);
+        console.log(this.props);
+    }
     state = { expanded: false };
 
-    render(){
-
-        return (
-            <List className={this.props.classes.root}>
-                console.log({this.props.follow.avatar1})
+    getListFollow = () =>{
+        if(this.props.follows!==undefined)
+        return this.props.follows.map(follow=>{
+            return <div>
                 <ListItem>
-                    <Avatar style={{width: 50, height: 50, backgroundColor: "red"}} aria-label="Recipe" className={this.props.classes.avatar2}>
-                        {this.props.follows.avatar1}
-
+                    <Avatar style={{width: 50, height: 50, backgroundColor: "red"}} 
+                    aria-label="Recipe" className={this.props.classes.avatar2}>
+                        {follow.avatar}
                     </Avatar>
                     <div>
-                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>Nguyễn Thịnh Khang</div>
-                        <div style={{fontSize: 13, paddingLeft: 3, color: 'green'}}>Follow</div>
-                    </div>
-                </ListItem>
-                <li>
-                    <Divider variant="inset" />
-                </li>
-                <ListItem>
-                    <Avatar style={{width: 50, height: 50, backgroundColor: "red"}} aria-label="Recipe" className={this.props.classes.avatar2}>
-                        L
-                    </Avatar>
-                    <div>
-                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>Nguyễn Hữu Linh</div>
+                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>{follow.name}</div>
                         <div style={{fontSize: 13, paddingLeft: 3, color: 'green'}}>Follow</div>
                     </div>
                 </ListItem>
                 <Divider variant="inset" component="li" />
-                <ListItem>
-                    <Avatar style={{width: 50, height: 50, backgroundColor: "red"}} aria-label="Recipe" className={this.props.classes.avatar2}>
-                        N
-                    </Avatar>
-                    <div>
-                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>Lê Xuân Nam</div>
-                        <div style={{fontSize: 13, paddingLeft: 3, color: 'green'}}>Follow</div>
-                    </div>
-                </ListItem>
+            </div>
+        })
+    }
+
+    componentDidMount(){
+        
+    }
+    render(){
+        return (
+            <List className={this.props.classes.root}>
+                {this.getListFollow()}
             </List>
         );
     }

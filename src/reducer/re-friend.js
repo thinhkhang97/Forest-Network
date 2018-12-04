@@ -2,16 +2,16 @@
 
 const initState = [
     {
-        name1: 'Nguyen Thinh Khang',
-        avatar1: 'K'
+        name: 'Nguyen Thinh Khang',
+        avatar: 'K'
     },
     {
-        name1: 'Nguyen Huu Linh',
-        avatar1: 'L'
+        name: 'Nguyen Huu Linh',
+        avatar: 'L'
     },
     {
-        name1: 'Le Xuan Nam',
-        avatar1: 'N'
+        name: 'Le Xuan Nam',
+        avatar: 'N'
     }
 ];
 
