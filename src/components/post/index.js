@@ -90,6 +90,29 @@ class Post extends React.Component {
         this.setState(state => ({ expanded: !state.expanded }));
     };
 
+    getListComment(){
+        const listComments = this.props.post.comments;
+        return listComments.map(comment=>{
+            return <div>
+                <ListItem alignItems="flex-start">
+                <Avatar aria-label="Recipe" className={this.props.classes.avatar}>
+                    {comment.avatar}
+                </Avatar>
+                <ListItemText
+                    primary={comment.name}
+                    secondary={
+                        <React.Fragment>
+                            <Typography component="span" className={this.props.classes.inline} color="textPrimary">
+                            {comment.content}
+                            </Typography>
+                        </React.Fragment>
+                    }
+                />
+            </ListItem>
+            </div>
+        })
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -98,7 +121,7 @@ class Post extends React.Component {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="Recipe" className={classes.avatar}>
-                            R
+                            {this.props.post.avatar}
                         </Avatar>
                     }
                     action={
@@ -106,8 +129,8 @@ class Post extends React.Component {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title="Shrimp and Chorizo Paella"
-                    subheader="September 14, 2016"
+                    title={this.props.post.name}
+                    subheader={this.props.post.datePost}
                 />
                 <CardMedia
                     className={classes.media}
@@ -117,8 +140,7 @@ class Post extends React.Component {
                 />
                 <CardContent>
                     <Typography component="p">
-                        This impressive paella is a perfect party dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                        {this.props.post.status}
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
@@ -141,54 +163,7 @@ class Post extends React.Component {
                 </CardActions>
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <List className={classes.root}>
-                        <ListItem alignItems="flex-start">
-                            <Avatar aria-label="Recipe" className={classes.avatar}>
-                                K
-                            </Avatar>
-                            <ListItemText
-                                primary="Nguyễn Thịnh Khang"
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography component="span" className={classes.inline} color="textPrimary">
-                                           Hello
-                                        </Typography>
-
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        <ListItem alignItems="flex-start">
-                            <Avatar aria-label="Recipe" className={classes.avatar}>
-                                K
-                            </Avatar>
-                            <ListItemText
-                                primary="Summer BBQ"
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography component="span" className={classes.inline} color="textPrimary">
-                                            to Scott, Alex, Jennifer
-                                        </Typography>
-                                        {" — Wish I could come, but I'm out of town this…"}
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        <ListItem alignItems="flex-start">
-                            <Avatar aria-label="Recipe" className={classes.avatar}>
-                                K
-                            </Avatar>
-                            <ListItemText
-                                primary="Oui Oui"
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography component="span" className={classes.inline} color="textPrimary">
-                                            Sandra Adams
-                                        </Typography>
-                                        {' — Do you have Paris recommendations? Have you ever…'}
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
+                        {this.getListComment()}
                     </List>
                     <div style={{display: 'flex', width: "100%", paddingLeft: 20, paddingRight: 20, paddingBottom: 20,}}>
                         <FormControl fullWidth={true}>

@@ -11,7 +11,7 @@ import Post from "../../components/post";
 import PostInPut from "../../components/post-input";
 import Icon from '@material-ui/core/Icon';
 import Line from '../../components/line';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -21,56 +21,61 @@ const styles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
-    newsfeedContainer:{
+    newsfeedContainer: {
         paddingLeft: '10%',
         paddingRight: '10%'
     }
 });
 
-function NewFeed(props) {
-    const { classes } = props;
+class NewFeed extends React.Component {
 
-    return (
-        <div className={classes.root}>
-            <Navigation />
-            <div className={classes.newsfeedContainer}>
-            <div style={{marginTop: 80}}>
-                <Grid container spacing={24}>
-                    <Grid item xs>
-                        <Link to='/mywall/timeline'>
-                            <LinkToMyWall />
-                        </Link>
-                    </Grid>
-                    <Grid item xs={6} >
-                        <PostInPut />
-                        <Line/>
-                        <div style={{paddingTop: 20 }}>
-                            <Post />
-                            <br/>
-                            <Post />
-                            <br/>
-                            <Post />
-                            <br/>
-                            <Post />
-                            <br/>
-                            <Post />
-                            <br/>
-                            <Post />
-                        </div>
-                    </Grid>
-                    <Grid item xs>
-                        <Paper className={classes.paper}>Danh sách chuyển tiền</Paper>
-                    </Grid>
-                </Grid>
+    constructor(props){
+        super(props);
+        this.classes = this.props.classes;
+    }
+
+    getListPosts = () => {
+        return this.props.listPosts.map(post => {
+            return <Post post={post} />
+        })
+    }
+    render() {
+        return (
+            <div className={this.classes.root}>
+                <Navigation />
+                <div className={this.classes.newsfeedContainer}>
+                    <div style={{ marginTop: 80 }}>
+                        <Grid container spacing={24}>
+                            <Grid item xs>
+                                <Link to='/mywall/timeline'>
+                                    <LinkToMyWall />
+                                </Link>
+                            </Grid>
+                            <Grid item xs={6} >
+                                <PostInPut />
+                                <Line />
+                                <div style={{ paddingTop: 20 }}>
+                                    {this.getListPosts()}
+                                </div>
+                            </Grid>
+                            <Grid item xs>
+                                <Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </div>
+
             </div>
-            </div>
-            
-        </div>
-    );
+        );
+    }
 }
 
 NewFeed.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NewFeed);
+const mapStateToProps = state => ({
+    listPosts: state.posts
+})
+
+export default connect(mapStateToProps)(withStyles(styles)(NewFeed));
