@@ -23,7 +23,7 @@ class Demo extends React.Component {
                {/*<CoverWall/>*/}
                {/*<EditMenu/>*/}
                {/*<EditProfile/>*/}
-               {/* <MyWall/> */}
+                {/*<MyWall/>*/}
                {/* <NewsFeed/> */}
            </div>
         )
