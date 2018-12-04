@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Navigation from "../../components/navigation";
@@ -10,6 +10,7 @@ import LinkToMyWall from "../../components/link-to-my-wall";
 import Post from "../../components/post";
 import PostInPut from "../../components/post-input";
 import Icon from '@material-ui/core/Icon';
+import Line from '../../components/line'
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -26,25 +27,38 @@ function NewFeed(props) {
 
     return (
         <div className={classes.root}>
-            <Navigation/>
-            <Grid container spacing={24}>
-                <Grid item xs>
-                    <Paper className={classes.paper}>
-                        <div style={{paddingLeft: 10}}>
-                            <LinkToMyWall/>
+            <Navigation />
+            <div style={{marginTop: 80}}>
+                <Grid container spacing={24}>
+                    <Grid item xs>
+                        <Paper className={classes.paper}>
+                            <div style={{ paddingLeft: 10 }}>
+                                <LinkToMyWall />
+                            </div>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <PostInPut />
+                        <Line/>
+                        <div style={{paddingTop: 20 }}>
+                            <Post />
+                            <br/>
+                            <Post />
+                            <br/>
+                            <Post />
+                            <br/>
+                            <Post />
+                            <br/>
+                            <Post />
+                            <br/>
+                            <Post />
                         </div>
-                    </Paper>
+                    </Grid>
+                    <Grid item xs>
+                        <Paper className={classes.paper}>Danh sách chuyển tiền</Paper>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6} >
-                    <PostInPut/>
-                    <div style={{paddingLeft: 50, paddingTop: 20}}>
-                        <Post/>
-                    </div>
-                </Grid>
-                <Grid item xs>
-                    <Paper className={classes.paper}>Danh sách chuyển tiền</Paper>
-                </Grid>
-            </Grid>
+            </div>
         </div>
     );
 }
