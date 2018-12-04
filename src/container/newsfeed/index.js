@@ -20,6 +20,10 @@ const styles = theme => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    newsfeedContainer:{
+        paddingLeft: '10%',
+        paddingRight: '10%'
+    }
 });
 
 function NewFeed(props) {
@@ -28,14 +32,11 @@ function NewFeed(props) {
     return (
         <div className={classes.root}>
             <Navigation />
+            <div className={classes.newsfeedContainer}>
             <div style={{marginTop: 80}}>
                 <Grid container spacing={24}>
                     <Grid item xs>
-                        <Paper className={classes.paper}>
-                            <div style={{ paddingLeft: 10 }}>
-                                <LinkToMyWall />
-                            </div>
-                        </Paper>
+                        <LinkToMyWall />
                     </Grid>
                     <Grid item xs={6} >
                         <PostInPut />
@@ -59,6 +60,8 @@ function NewFeed(props) {
                     </Grid>
                 </Grid>
             </div>
+            </div>
+            
         </div>
     );
 }

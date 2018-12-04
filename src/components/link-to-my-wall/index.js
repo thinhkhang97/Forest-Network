@@ -5,19 +5,28 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
     menuContainer: {
-        width: 150,
+        width: 230,
         height: 100,
-        position: 'relative'
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+        borderRadius: 3,
+        position: 'fixed',
     },
     avatar: {
-        height: 50,
-        width: 50,
+        height: 90,
+        width: 90,
         borderRadius: '50%',
         borderColor: 'white',
-        border: '10px solid #fff',
+        border: '2px solid #fff',
         objectFit: 'cover',
-        position: 'absolute',
-        bottom: -10,
+    },
+    info:{
+        fontSize: 12,
+        color: 'white',
+        lineHeigth: 5,
+        paddingLeft: 20
     }
 
 };
@@ -30,11 +39,18 @@ class LinkToMyWall extends React.Component {
     }
     render() {
         return (
-            <div className={this.classes.root}>
-                <div style={{backgroundImage: 'url('+'https://www.independent.ng/wp-content/uploads/2018/09/Forest.jpg'+')'}}
+            <div>
+                <div style={{backgroundImage: 'url('+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREwFRD2j6yUNsjL43Xv76Rk3xQx4GpTLenFMnZOWB934l-v24C'+')'}}
                      className={this.classes.menuContainer}>
                     <div>
                         <img className={this.classes.avatar} src='https://i.ytimg.com/vi/nUioInZvGWo/maxresdefault.jpg'/>
+                    </div>
+
+                    <div className={this.classes.info}>
+                        <h5>Nancy</h5>
+                        <div>Follower: 12200</div>
+                        <div>Following: 1203</div>
+                        <div>Money: 928382</div>
                     </div>
                 </div>
             </div>
