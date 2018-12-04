@@ -10,7 +10,8 @@ import LinkToMyWall from "../../components/link-to-my-wall";
 import Post from "../../components/post";
 import PostInPut from "../../components/post-input";
 import Icon from '@material-ui/core/Icon';
-import Line from '../../components/line'
+import Line from '../../components/line';
+import {Link} from 'react-router-dom';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -36,7 +37,9 @@ function NewFeed(props) {
             <div style={{marginTop: 80}}>
                 <Grid container spacing={24}>
                     <Grid item xs>
-                        <LinkToMyWall />
+                        <Link to='/mywall/timeline'>
+                            <LinkToMyWall />
+                        </Link>
                     </Grid>
                     <Grid item xs={6} >
                         <PostInPut />

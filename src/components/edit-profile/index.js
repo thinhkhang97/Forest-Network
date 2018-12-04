@@ -3,24 +3,23 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import EditBasicInfo from './edit-basic-info';
 import ChangePassword from './change-password';
+import {Link} from 'react-router-dom';
 class EditProfile extends React.Component {
 
     render() {
         return (
-            // <EditBasicInfo/>
-            <ChangePassword/>
+            <div>
+                {this.props.page === 'basic-info'?<EditBasicInfo/>:<ChangePassword/> }
+            </div>
         )
     }
 }
 
-// EditProfile.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
-
 const mapStateToProps = state => ({
+    page: state.myWallPage
 });
 
 const mapDispatchToProps = {
 }
 
-export default (EditProfile);
+export default connect(mapStateToProps)(EditProfile);

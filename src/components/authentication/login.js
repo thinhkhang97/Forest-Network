@@ -12,7 +12,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import {Link} from 'react-router-dom';
 import Register from './register'
 
 const styles = theme => ({
@@ -79,18 +79,22 @@ class SignIn extends React.Component{
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
                             />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={this.props.classes.submit}
-                            >
-                                Sign in
-                            </Button>
-                            <Button fullWidth variant="outlined" color="primary" className={this.props.classes.submit}>
-                                Sign up
-                            </Button>
+                            <Link to='/'>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    className={this.props.classes.submit}
+                                >
+                                    Sign in
+                                </Button>
+                            </Link>
+                            <Link to='/signup'>
+                                <Button fullWidth variant="outlined" color="primary" className={this.props.classes.submit}>
+                                    Sign up
+                                </Button>
+                            </Link>
                         </form>
                     </Paper>
                 </main>

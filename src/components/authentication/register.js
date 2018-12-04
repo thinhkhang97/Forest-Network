@@ -10,7 +10,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import { Link } from "react-router-dom";
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -68,15 +68,17 @@ class Register extends React.Component{
                             <InputLabel htmlFor="password">Confirm Password</InputLabel>
                             <Input name="password" type="password" id="password" autoComplete="current-password" />
                         </FormControl>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained  "
-                            color="primary"
-                            className={this.props.classes.submit}
-                        >
-                            Sign up
-                        </Button>
+                        <Link to='/signin'>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="outlined"
+                                color="primary"
+                                className={this.props.classes.submit}
+                            >
+                                Sign up
+                            </Button>
+                        </Link>
                     </form>
                 </Paper>
             </main>

@@ -16,7 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
+import { Link } from 'react-router-dom'
 const styles = theme => ({
     root: {
         width: '100%',
@@ -128,7 +128,7 @@ class Navigation extends React.Component {
                 onClose={this.handleMenuClose}
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={this.handleMenuClose}>Sign out</MenuItem>
             </Menu>
         );
 
@@ -142,9 +142,9 @@ class Navigation extends React.Component {
             >
                 <MenuItem>
                     {/*<IconButton color="inherit">*/}
-                        {/*<Badge badgeContent={11} color="secondary">*/}
-                            {/*<NotificationsIcon />*/}
-                        {/*</Badge>*/}
+                    {/*<Badge badgeContent={11} color="secondary">*/}
+                    {/*<NotificationsIcon />*/}
+                    {/*</Badge>*/}
                     {/*</IconButton>*/}
                     <p>Notifications</p>
                 </MenuItem>
@@ -164,11 +164,13 @@ class Navigation extends React.Component {
                 }}>
                     <Toolbar>
                         {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">*/}
-                            {/*<MenuIcon />*/}
+                        {/*<MenuIcon />*/}
                         {/*</IconButton>*/}
-                        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            BitzNet
-                        </Typography>
+                        <Link to='/'>
+                            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                                BitzNet
+                            </Typography>
+                        </Link>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -183,12 +185,16 @@ class Navigation extends React.Component {
                         </div>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <IconButton color="inherit" style={{fontSize: 18}}>
-                                New Feeds
+                            <Link to='/'>
+                                <IconButton color="inherit" style={{ fontSize: 18 }}>
+                                    Newsfeed
+                                </IconButton>
+                            </Link>
+                            <Link to='/mywall/timeline'>
+                            <IconButton color="inherit" style={{ fontSize: 18 }}>
+                                    Timeline
                             </IconButton>
-                            <IconButton color="inherit" style={{fontSize: 18}}>
-                                TimeLine
-                            </IconButton>
+                            </Link>
                             <IconButton
                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                 aria-haspopup="true"

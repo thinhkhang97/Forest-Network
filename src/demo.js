@@ -24,7 +24,7 @@ class Demo extends React.Component {
                {/*<EditMenu/>*/}
                {/*<EditProfile/>*/}
                {/* <MyWall/> */}
-               <NewsFeed/>
+               {/* <NewsFeed/> */}
            </div>
         )
     }

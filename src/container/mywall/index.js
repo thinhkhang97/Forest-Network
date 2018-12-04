@@ -8,7 +8,7 @@ import Post from '../../components/post';
 import EditMenu from '../../components/edit-menu';
 import EditProfile from '../../components/edit-profile';
 import { withStyles } from '@material-ui/core/styles';
-
+import {Route} from 'react-router-dom';
 const styles = {
     myWallContainer: {
         flex: 1,
@@ -46,7 +46,21 @@ class MyWall extends React.Component {
     constructor(props) {
         super(props)
         this.classes = this.props.classes;
+        console.log(this.props.match.params)
     }
+
+    timeLine=()=>{
+        return <div>
+                <PostInput/>
+                    <div className={this.classes.line}/>
+                <Post/>
+                    <div className={this.classes.line}/>
+                <Post/>
+                    <div className={this.classes.line}/>
+                <Post/>
+            </div>
+    }
+
     render() {
         return (
             <div className={this.classes.myWallContainer}>
@@ -57,18 +71,12 @@ class MyWall extends React.Component {
                         <div className={this.classes.partLeft}>
                             <h3 style={{textAlign: 'center', color: '#27aae1'}}>Nancy</h3>
                             <p style={{textAlign: 'center'}}>Everything is fine</p>
-
-                            <EditMenu/>
+                            {this.props.match.params.page === 'edit-profile'? 
+                            <EditMenu/>:<div/>}
                         </div>
                         <div className={this.classes.partMid}>
-                            {/*<PostInput/>*/}
-                                {/*<div className={this.classes.line}/>*/}
-                            {/*<Post/>*/}
-                                {/*<div className={this.classes.line}/>*/}
-                            {/*<Post/>*/}
-                                {/*<div className={this.classes.line}/>*/}
-                            {/*<Post/>*/}
-                            <EditProfile/>
+                            {this.props.match.params.page === 'edit-profile'? 
+                            <EditProfile/>:this.timeLine()}
                         </div>
                         <div className={this.classes.partRight}>
                             {/*part right*/}
@@ -85,9 +93,10 @@ MyWall.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    page: state.myWallPage
 });
 
 const mapDispatchToProps = {
 }
 
-export default (withStyles(styles)(MyWall));
+export default connect(mapStateToProps)((withStyles(styles)(MyWall)));

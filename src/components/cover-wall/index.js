@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 const styles = {
     root: {
         flexGrow: 1,
@@ -91,15 +92,30 @@ class CoverWall extends React.Component {
                         </div>
                         <div className={this.classes.tab9}>
                             <div>
-                                <Button className={this.classes.button}>
-                                    Timeline
-                                </Button>
-                                <Button className={this.classes.button}>
-                                    Edit profile
-                                </Button>
-                                <Button className={this.classes.button}>
-                                    About
-                                </Button>
+                                <Link to='/mywall/timeline'>
+                                    <Button className={this.classes.button}
+                                    onClick={()=>{
+                                        console.log('click');
+                                        this.props.dispatch({type:'GET_PAGE', page: 'timeline'})
+                                    }}
+                                    >
+                                        Timeline
+                                    </Button>
+                                </Link>
+                                <Link to='/mywall/edit-profile'>
+                                    <Button className={this.classes.button} 
+                                    onClick={()=>{
+                                        console.log('click');
+                                        this.props.dispatch({type:'GET_PAGE', page: 'edit-profile'})
+                                    }}>
+                                        Edit profile
+                                    </Button>
+                                </Link>
+                                <Link to='/mywall/About'>
+                                    <Button className={this.classes.button}>
+                                        About
+                                    </Button>
+                                </Link>
                             </div>
                             <div className={this.classes.numberFollow}>
                                 1,299 people following her
@@ -125,4 +141,4 @@ CoverWall.propTypes = {
 
 };
 
-export default withStyles(styles)(CoverWall);
+export default connect()(withStyles(styles)(CoverWall));
