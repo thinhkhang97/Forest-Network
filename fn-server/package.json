@@ -1,0 +1,15 @@
+{
+  "name": "fn-server",
+  "version": "1.0.0",
+  "description": "Server for Forest Network",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "1512234-1512286",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.16.4",
+    "sequelize": "^4.41.2"
+  }
+}
