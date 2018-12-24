@@ -125,7 +125,7 @@ class CoverWall extends React.Component {
                                 </Link>
                             </div>
                             <div className={this.classes.numberFollow}>
-                                {this.props.followers} followers
+                                {this.props.followers != null ? this.props.followers : 1000} followers
                                 <Button variant='contained' color='primary' className={this.classes.primaryButton}>
                                     Follow
                                 </Button>
@@ -133,7 +133,11 @@ class CoverWall extends React.Component {
                         </div>
                     </div>
                     <div style={{marginLeft: 20}}>
-                        <img className={this.classes.avatar} src={`data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`}/>
+                        <img className={this.classes.avatar} src={
+                            this.props.imageBase64!=null?
+                            `data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`:
+                            'https://i.pinimg.com/originals/ab/e9/2f/abe92f535382cba9615e8767c21a6304.jpg'
+                            }/>
                     </div>
                 </div>
             </div>

@@ -53,14 +53,19 @@ class LinkToMyWall extends React.Component {
                      className={this.classes.menuContainer}>
                     <div>
                         {/* <img className={this.classes.avatar} src='https://i.ytimg.com/vi/nUioInZvGWo/maxresdefault.jpg'/> */}
-                        <img className={this.classes.avatar} src={`data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`}/>
+                        <img className={this.classes.avatar} 
+                        src={
+                            this.props.imageBase64!=null ?
+                            `data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`:
+                            'https://i.pinimg.com/originals/ab/e9/2f/abe92f535382cba9615e8767c21a6304.jpg'
+                            }/>
                     </div>
 
                     <div className={this.classes.info}>
-                        <h5>{this.props.userName}</h5>
-                        <div>Follower: {this.props.numberFollowers}</div>
-                        <div>Following: {this.props.numberFollowings}</div>
-                        <div>Money: {this.props.balance}</div>
+                        <h5>{this.props.userName != null? this.props.userName : 'Nancy'}</h5>
+                        <div>Follower: {this.props.numberFollowers != null ? this.props.numberFollowers : 100}</div>
+                        <div>Following: {this.props.numberFollowings != null ? this.props.numberFollowings : 1000}</div>
+                        <div>Money: {this.props.balance != null ? this.props.balance : 123878923}</div>
                     </div>
                 </div>
             </div>

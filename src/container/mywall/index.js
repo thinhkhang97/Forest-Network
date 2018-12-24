@@ -9,6 +9,8 @@ import EditMenu from '../../components/edit-menu';
 import EditProfile from '../../components/edit-profile';
 import { withStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
+import ReactLoading from 'react-loading';
+import { getAccountInfomation } from '../../services';
 const styles = {
     myWallContainer: {
         flex: 1,
@@ -45,7 +47,8 @@ class MyWall extends React.Component {
 
     privateKey = null;
     state = {
-        isLoading: false
+        isLoading: true,
+        isLogined: false
     }
 
     constructor(props) {
@@ -71,45 +74,71 @@ class MyWall extends React.Component {
         </div>
     }
 
-    checkIsLogin = () => {
-        const pk = localStorage.getItem('privateKey');
-        if (pk!=null) {
-            console.log('Private key:',pk);
-            this.privateKey = pk;
-            return true;
+    loadingData = async () => {
+        const accountData = await getAccountInfomation(this.privateKey);
+        if (accountData === null)
+            alert('Wrong private key');
+        else {
+            this.props.dispatch({ type: 'GET_INFO', data: accountData });
+            this.setState({ isLogined: true })
         }
-        return false;
+        this.setState({ isLoading: false });
     }
+
+    // componentDidMount() {
+    //     const pk = localStorage.getItem('privateKey');
+    //     console.log('IN compoe my wall')
+    //     if (this.props.account === null) {
+    //         this.setState({ isLoading: false });
+    //         if (pk != null) {
+    //             this.privateKey = pk;
+    //             this.loadingData();
+    //         }
+    //     } else {
+    //         console.log('IS login')
+    //         this.setState({ isLogined: true, isLoading: false });
+    //     }
+    // }
 
     render() {
         return (
             <div className={this.classes.myWallContainer}>{
-                this.checkIsLogin() === false ?
-                    <Redirect exact from="/" to="/signin" /> :
-                    <div>
-                        <Navigation />
-                        <div className={this.classes.myWallContent}>
-                            <CoverWall 
-                                imageBase64={this.props.account.avatar.data.data}
-                                followers={this.props.account.followers.length}
-                            />
-                            <div className={this.classes.contentContainer}>
-                                <div className={this.classes.partLeft}>
-                                    <h3 style={{ textAlign: 'center', color: '#27aae1' }}>{this.props.account.username}</h3>
-                                    <p style={{ textAlign: 'center' }}>Everything is fine</p>
-                                    {this.props.match.params.page === 'edit-profile' ?
-                                        <EditMenu /> : <div />}
-                                </div>
-                                <div className={this.classes.partMid}>
-                                    {this.props.match.params.page === 'edit-profile' ?
-                                        <EditProfile /> : this.timeLine()}
-                                </div>
-                                <div className={this.classes.partRight}>
-                                    {/*part right*/}
-                                </div>
+                <div>
+                    <Navigation />
+                    <div className={this.classes.myWallContent}>
+                        <CoverWall
+                            imageBase64={
+                                this.props.account != null ?
+                                this.props.account.avatar.data.data : 
+                                null
+                            }
+                            followers={
+                                this.props.account != null ?
+                                this.props.account.followers.length: 
+                                null
+                            }
+                        />
+                        <div className={this.classes.contentContainer}>
+                            <div className={this.classes.partLeft}>
+                                <h3 style={{ textAlign: 'center', color: '#27aae1' }}>{
+                                    this.props.account != null ?
+                                    this.props.account.username :
+                                    'Nancy'
+                                    }</h3>
+                                <p style={{ textAlign: 'center' }}>Everything is fine</p>
+                                {this.props.match.params.page === 'edit-profile' ?
+                                    <EditMenu /> : <div />}
+                            </div>
+                            <div className={this.classes.partMid}>
+                                {this.props.match.params.page === 'edit-profile' ?
+                                    <EditProfile /> : this.timeLine()}
+                            </div>
+                            <div className={this.classes.partRight}>
+                                {/*part right*/}
                             </div>
                         </div>
                     </div>
+                </div>
             }
             </div>
         )
