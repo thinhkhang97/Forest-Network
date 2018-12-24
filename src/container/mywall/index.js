@@ -47,7 +47,7 @@ class MyWall extends React.Component {
 
     privateKey = null;
     state = {
-        isLoading: true,
+        isLoading: false,
         isLogined: false
     }
 
@@ -85,24 +85,19 @@ class MyWall extends React.Component {
         this.setState({ isLoading: false });
     }
 
-    // componentDidMount() {
-    //     const pk = localStorage.getItem('privateKey');
-    //     console.log('IN compoe my wall')
-    //     if (this.props.account === null) {
-    //         this.setState({ isLoading: false });
-    //         if (pk != null) {
-    //             this.privateKey = pk;
-    //             this.loadingData();
-    //         }
-    //     } else {
-    //         console.log('IS login')
-    //         this.setState({ isLogined: true, isLoading: false });
-    //     }
-    // }
+    componentDidMount(){
+        if(this.props.account === null) {
+            this.privateKey = localStorage.getItem('privateKey');
+            this.setState({isLoading: true});
+            this.loadingData();
+        }
+    }
 
     render() {
         return (
             <div className={this.classes.myWallContainer}>{
+                this.state.isLoading ?
+                <ReactLoading type='spinningBubbles' height='20%' width='20%' color='red'/> :
                 <div>
                     <Navigation />
                     <div className={this.classes.myWallContent}>

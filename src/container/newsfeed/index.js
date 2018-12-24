@@ -34,7 +34,7 @@ class NewFeed extends React.Component {
 
     privateKey = null;
     state = {
-        isLoading: true,
+        isLoading: false,
         isLogined: false
     }
     constructor(props) {
@@ -59,7 +59,6 @@ class NewFeed extends React.Component {
             alert('Wrong private key');
         else {
             this.props.dispatch({ type: 'GET_INFO', data: accountData });
-            this.setState({ isLogined: true })
         }
         this.setState({ isLoading: false });
     }
@@ -77,28 +76,20 @@ class NewFeed extends React.Component {
         return false;
     }
 
-    // componentDidMount() {
-    //     // Check is logined
-    //     this.setState({isLoading: true})
-    //     const pk = localStorage.getItem('privateKey');
-    //     if(pk!=null) {
-    //         if(this.props.account === null) {
-    //             this.privateKey = pk;
-
-    //             this.loadingData();
-    //         }
-    //         else {
-    //             this.setState({isLogined: false});
-    //             this.setState({isLoading: false});
-    //         }
-    //     } else {
-    //         this.setState({isLogined: false})
-    //     }
-    // }
+    componentDidMount() {
+        // Check is has data
+        if(this.props.account === null) {
+            this.privateKey = localStorage.getItem('privateKey');
+            this.setState({isLoading: true});
+            this.loadingData();
+        }
+    }
 
     render() {
         return (
             <div className={this.classes.root}>{
+                this.state.isLoading ?
+                <ReactLoading type='spinningBubbles' height='20%' width='20%' color='red'/> :
                 <div>
                     <Navigation />
                     <div className={this.classes.newsfeedContainer}>
