@@ -37,20 +37,30 @@ class LinkToMyWall extends React.Component {
         super(props)
         this.classes = this.props.classes
     }
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+    componentDidMount() {
+        //console.log('IMG Source',this.arrayBufferToBase64(this.props.imageBase64));
+    }
     render() {
         return (
             <div>
                 <div style={{backgroundImage: 'url('+'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREwFRD2j6yUNsjL43Xv76Rk3xQx4GpTLenFMnZOWB934l-v24C'+')'}}
                      className={this.classes.menuContainer}>
                     <div>
-                        <img className={this.classes.avatar} src='https://i.ytimg.com/vi/nUioInZvGWo/maxresdefault.jpg'/>
+                        {/* <img className={this.classes.avatar} src='https://i.ytimg.com/vi/nUioInZvGWo/maxresdefault.jpg'/> */}
+                        <img className={this.classes.avatar} src={`data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`}/>
                     </div>
 
                     <div className={this.classes.info}>
-                        <h5>Nancy</h5>
-                        <div>Follower: 12200</div>
-                        <div>Following: 1203</div>
-                        <div>Money: 928382</div>
+                        <h5>{this.props.userName}</h5>
+                        <div>Follower: {this.props.numberFollowers}</div>
+                        <div>Following: {this.props.numberFollowings}</div>
+                        <div>Money: {this.props.balance}</div>
                     </div>
                 </div>
             </div>

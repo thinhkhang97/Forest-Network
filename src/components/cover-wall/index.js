@@ -77,6 +77,13 @@ const styles = {
 
 class CoverWall extends React.Component {
 
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     constructor(props) {
         super(props)
         this.classes = this.props.classes
@@ -118,15 +125,15 @@ class CoverWall extends React.Component {
                                 </Link>
                             </div>
                             <div className={this.classes.numberFollow}>
-                                1,299 people following her
+                                {this.props.followers} followers
                                 <Button variant='contained' color='primary' className={this.classes.primaryButton}>
-                                    Add friend
+                                    Follow
                                 </Button>
                             </div>
                         </div>
                     </div>
                     <div style={{marginLeft: 20}}>
-                        <img className={this.classes.avatar} src='https://i.ytimg.com/vi/nUioInZvGWo/maxresdefault.jpg'/>
+                        <img className={this.classes.avatar} src={`data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`}/>
                     </div>
                 </div>
             </div>
@@ -140,5 +147,6 @@ CoverWall.propTypes = {
     backgroundImage: PropTypes.object.isRequired,
 
 };
+
 
 export default connect()(withStyles(styles)(CoverWall));

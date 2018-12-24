@@ -12,9 +12,11 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {Link} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 import Register from './register'
-
+import {getAccountInfomation} from '../../services';
+import {connect} from 'react-redux';
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -53,51 +55,82 @@ const styles = theme => ({
     }
 });
 
-class SignIn extends React.Component{
-    render(){
+class SignIn extends React.Component {
+    state = {
+        privateKey: '',
+        isLoading: false
+    }
+
+    loading = () => {
+        return <ReactLoading type='spinningBubbles' color='#e5e5e5' height='20%' width='20%' />
+    }
+
+    loadingData = async ()=>{
+        const accountData = await getAccountInfomation(this.state.privateKey);
+        if(accountData === null)
+            alert('Wrong private key');
+        else {
+            this.props.dispatch({type: 'GET_INFO', data: accountData});
+            console.log('Set private key to local', this.state.privateKey);
+            await localStorage.setItem('privateKey', this.state.privateKey);
+            this.props.history.push('/');
+        }
+    }
+
+    render() {
         return (
             <div>
-                <main className={this.props.classes.main}>
-                    <CssBaseline />
-                    <Paper className={this.props.classes.paper}>
-                        <Avatar className={this.props.classes.avatar}>
-                            <LockIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
+                {!this.state.isLoading ?
+                    <main className={this.props.classes.main}>
+
+                        <CssBaseline />
+                        <Paper className={this.props.classes.paper}>
+                            <Avatar className={this.props.classes.avatar}>
+                                <LockIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign in
                         </Typography>
-                        <form className={this.props.classes.form}>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
-                                <Input name="password" type="password" id="password" autoComplete="current-password" />
-                            </FormControl>
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-                            <Link to='/'>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={this.props.classes.submit}
-                                >
-                                    Sign in
+                            <form className={this.props.classes.form}>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="password">Private key</InputLabel>
+                                    <Input
+                                        name="password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                        value={this.state.privateKey}
+                                        onChange={(e) => {
+                                            this.setState({ privateKey: e.target.value })
+                                        }}
+                                    />
+                                </FormControl>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        className={this.props.classes.submit}
+                                        onClick={() => {
+                                            this._isMounted = true;
+                                            console.log('Submit private key:', this.state.privateKey);
+                                            this.setState({ isLoading: true });
+                                            this.loadingData();
+                                        }}
+                                    >
+                                        Sign in
                                 </Button>
-                            </Link>
-                            <Link to='/signup'>
-                                <Button fullWidth variant="outlined" color="primary" className={this.props.classes.submit}>
-                                    Sign up
+                                <Link to='/signup'>
+                                    <Button fullWidth variant="outlined" color="primary" className={this.props.classes.submit}>
+                                        Sign up
                                 </Button>
-                            </Link>
-                        </form>
-                    </Paper>
-                </main>
+                                </Link>
+                            </form>
+                        </Paper>
+
+                    </main>
+                    :<ReactLoading type='spinningBubbles' color='red' height='20%' width='20%' />
+                }
             </div>
         );
     }
@@ -106,5 +139,7 @@ class SignIn extends React.Component{
 SignIn.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(SignIn);
+// const mapStateToProps = state=>{
+//     return 
+// }
+export default connect()(withRouter(withStyles(styles)(SignIn)));

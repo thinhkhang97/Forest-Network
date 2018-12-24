@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Navigation from '../../components/navigation';
 import CoverWall from '../../components/cover-wall';
@@ -8,7 +8,7 @@ import Post from '../../components/post';
 import EditMenu from '../../components/edit-menu';
 import EditProfile from '../../components/edit-profile';
 import { withStyles } from '@material-ui/core/styles';
-import {Route} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 const styles = {
     myWallContainer: {
         flex: 1,
@@ -19,7 +19,7 @@ const styles = {
         paddingLeft: '10%',
         paddingRight: '10%',
     },
-    contentContainer:{
+    contentContainer: {
         display: 'flex',
     },
     partLeft: {
@@ -43,6 +43,11 @@ const styles = {
 
 class MyWall extends React.Component {
 
+    privateKey = null;
+    state = {
+        isLoading: false
+    }
+
     constructor(props) {
         super(props)
         this.classes = this.props.classes;
@@ -53,41 +58,59 @@ class MyWall extends React.Component {
         return this.props.listPosts.map(post => {
             return <div>
                 <Post post={post} />
-                <div className={this.classes.line}/>
+                <div className={this.classes.line} />
             </div>
         })
     }
 
-    timeLine=()=>{
+    timeLine = () => {
         return <div>
-                <PostInput/>
-                    <div className={this.classes.line}/>
-                {this.getListPosts()}
-            </div>
+            <PostInput />
+            <div className={this.classes.line} />
+            {this.getListPosts()}
+        </div>
+    }
+
+    checkIsLogin = () => {
+        const pk = localStorage.getItem('privateKey');
+        if (pk!=null) {
+            console.log('Private key:',pk);
+            this.privateKey = pk;
+            return true;
+        }
+        return false;
     }
 
     render() {
         return (
-            <div className={this.classes.myWallContainer}>
-                <Navigation/>
-                <div className={this.classes.myWallContent}>
-                    <CoverWall/>
-                    <div className={this.classes.contentContainer}>
-                        <div className={this.classes.partLeft}>
-                            <h3 style={{textAlign: 'center', color: '#27aae1'}}>Nancy</h3>
-                            <p style={{textAlign: 'center'}}>Everything is fine</p>
-                            {this.props.match.params.page === 'edit-profile'? 
-                            <EditMenu/>:<div/>}
-                        </div>
-                        <div className={this.classes.partMid}>
-                            {this.props.match.params.page === 'edit-profile'? 
-                            <EditProfile/>:this.timeLine()}
-                        </div>
-                        <div className={this.classes.partRight}>
-                            {/*part right*/}
+            <div className={this.classes.myWallContainer}>{
+                this.checkIsLogin() === false ?
+                    <Redirect exact from="/" to="/signin" /> :
+                    <div>
+                        <Navigation />
+                        <div className={this.classes.myWallContent}>
+                            <CoverWall 
+                                imageBase64={this.props.account.avatar.data.data}
+                                followers={this.props.account.followers.length}
+                            />
+                            <div className={this.classes.contentContainer}>
+                                <div className={this.classes.partLeft}>
+                                    <h3 style={{ textAlign: 'center', color: '#27aae1' }}>{this.props.account.username}</h3>
+                                    <p style={{ textAlign: 'center' }}>Everything is fine</p>
+                                    {this.props.match.params.page === 'edit-profile' ?
+                                        <EditMenu /> : <div />}
+                                </div>
+                                <div className={this.classes.partMid}>
+                                    {this.props.match.params.page === 'edit-profile' ?
+                                        <EditProfile /> : this.timeLine()}
+                                </div>
+                                <div className={this.classes.partRight}>
+                                    {/*part right*/}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+            }
             </div>
         )
     }
@@ -98,7 +121,8 @@ MyWall.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    listPosts: state.posts
+    listPosts: state.posts,
+    account: state.account
 });
 
 const mapDispatchToProps = {

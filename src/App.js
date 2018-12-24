@@ -11,20 +11,20 @@ import MyWall from './container/mywall/index';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './reducer';
+import { func } from 'prop-types';
 const store = createStore(rootReducer);
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <Provider store={store}>
+        <Provider store={store}> 
           <div>
             <Route exact path="/" component={NewsFeed} />
             <Route path="/mywall/:page" component={MyWall} />
             <Route path="/signin" component={Login} />
             <Route path="/signup" component={Register} />
-          </div>
-
+          </div> 
         </Provider>
       </Router>
     );
