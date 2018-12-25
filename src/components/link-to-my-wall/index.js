@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
     menuContainer: {
-        width: 230,
+        width: 300,
         height: 100,
         display: 'flex',
         alignItems: 'center',

@@ -10,7 +10,8 @@ import EditProfile from '../../components/edit-profile';
 import { withStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import ReactLoading from 'react-loading';
-import { getAccountInfomation, getAccount } from '../../services';
+import { getAccountInfomation, getAccount, payment } from '../../services';
+import swal from '@sweetalert/with-react';
 const styles = {
     myWallContainer: {
         flex: 1,
@@ -79,8 +80,6 @@ class Wall extends React.Component {
 
     timeLine = () => {
         return <div>
-            <PostInput />
-            <div className={this.classes.line} />
             {this.getListPosts()}
         </div>
     }
@@ -109,6 +108,63 @@ class Wall extends React.Component {
                     <Navigation />
                     <div className={this.classes.myWallContent}>
                         <CoverWall
+                            onClickPayment={()=>{
+                                console.log('Payment from', this.props.account.publicKey,'to',
+                                this.props.wall.publicKey)
+
+                                swal({
+                                    text: `Payment from ${this.props.account.publicKey} to ${this.props.wall.publicKey}`,
+                                    content: "input",
+                                    button: {
+                                      text: "Pay!",
+                                      closeModal: false,
+                                    },
+                                  })
+                                  .then(amount => {
+                                      if(amount) {
+                                        const pk = localStorage.getItem('privateKey');
+                                        if(pk) {
+                                            payment(pk,this.props.wall.publicKey,amount,16)
+                                            // .then(res=>{
+                                            //     console.log('Result payment:', res);
+                                            //     swal({
+                                            //         title: "Done!",
+                                            //         text: "You have paid "+amount,
+                                            //         icon: "success",
+                                            //         button: "Ok",
+                                            //     });
+                                            // })
+                                        }
+                                      }
+                                    })
+                                //   .then(results => {
+                                //     return results.json();
+                                //   })
+                                //   .then(json => {
+                                //     const movie = json.results[0];
+                                   
+                                //     if (!movie) {
+                                //       return swal("No movie was found!");
+                                //     }
+                                   
+                                //     const name = movie.trackName;
+                                //     const imageURL = movie.artworkUrl100;
+                                   
+                                //     swal({
+                                //       title: "Top result:",
+                                //       text: name,
+                                //       icon: imageURL,
+                                //     });
+                                //   })
+                                //   .catch(err => {
+                                //     if (err) {
+                                //       swal("Oh noes!", "The AJAX request failed!", "error");
+                                //     } else {
+                                //       swal.stopLoading();
+                                //       swal.close();
+                                //     }
+                                //   });
+                            }}
                             isHidden={true}
                             imageBase64={
                                 this.props.wall != null ?
@@ -123,11 +179,16 @@ class Wall extends React.Component {
                         />
                         <div className={this.classes.contentContainer}>
                             <div className={this.classes.partLeft}>
-                                <h3 style={{ textAlign: 'center', color: '#27aae1' }}>{
+                                <h3 style={{ textAlign: 'center', color: '#27aae1', fontSize: 18, marginTop: 20 }}>{
                                     this.props.wall != null ?
                                     this.props.wall.username :
                                     'Nancy'
-                                    }</h3>
+                                }</h3>
+                                <h3 style={{ textAlign: 'center', color: '#27aae1', fontSize: 14 }}>Money:{
+                                    this.props.wall != null ?
+                                    this.props.wall.balance :
+                                    1000
+                                }</h3>
                                 <p style={{ textAlign: 'center' }}>Everything is fine</p>
                                 {this.props.match.params.page === 'edit-profile' ?
                                     <EditMenu /> : <div />}
@@ -154,7 +215,8 @@ Wall.propTypes = {
 
 const mapStateToProps = state => ({
     listPosts: state.posts,
-    wall: state.wall
+    wall: state.wall,
+    account: state.account
 });
 
 const mapDispatchToProps = {

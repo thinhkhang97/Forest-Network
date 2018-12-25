@@ -128,6 +128,12 @@ class CoverWall extends React.Component {
                                 variant='contained' color='primary' className={this.classes.primaryButton}>
                                     Follow
                                 </Button>
+                                <Button 
+                                style={{visibility: this.props.isMe?'hidden':'visible'}}
+                                onClick={()=>this.props.onClickPayment()}
+                                variant='contained' color='primary' className={this.classes.primaryButton}>
+                                    Payment
+                                </Button>
                             </div>
                         </div>
                     </div>

@@ -127,11 +127,16 @@ class MyWall extends React.Component {
                         />
                         <div className={this.classes.contentContainer}>
                             <div className={this.classes.partLeft}>
-                                <h3 style={{ textAlign: 'center', color: '#27aae1' }}>{
+                                <h5 style={{ textAlign: 'center', color: '#27aae1', fontSize: 18, marginTop: 20 }}>{
                                     this.props.account != null ?
                                     this.props.account.username :
                                     'Nancy'
-                                    }</h3>
+                                    }</h5>
+                                <h5 style={{ textAlign: 'center', color: '#27aae1', fontSize: 14}}>Money:{
+                                this.props.account != null ?
+                                this.props.account.balance :
+                                1000
+                                }</h5>
                                 <p style={{ textAlign: 'center' }}>Everything is fine</p>
                                 {this.props.match.params.page === 'edit-profile' ?
                                     <EditMenu /> : <div />}

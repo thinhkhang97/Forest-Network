@@ -25,8 +25,8 @@ const styles = theme => ({
         color: theme.palette.text.secondary,
     },
     newsfeedContainer: {
-        paddingLeft: '10%',
-        paddingRight: '10%'
+        paddingLeft: '5%',
+        paddingRight: '5%'
     }
 });
 

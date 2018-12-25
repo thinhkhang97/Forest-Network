@@ -1,6 +1,8 @@
 import axios from 'axios';
+import {sign,encode,decode} from '../transaction';
 const { Keypair } = require('stellar-base');
 const config = { headers: { 'Access-Control-Allow-Methods': 'GET,PUT,PATCH,POST,DELETE', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' } }
+
 
 export async function getAccount(publicKey) {
     try{
@@ -81,4 +83,26 @@ export async function getAllNewsfeed(page, perpage) {
         console.log('ERROR to get newsfeed info', err);
         return null;
     }
+}
+
+/////////////////////////////////////////////////////////
+function createTx(Sequence, Operation, Params){
+    return {
+        version: 1,
+        sequence: Sequence,
+        memo: Buffer.from(''),
+        operation: Operation,
+        params: Params
+    }
+}
+export function payment(privateKey, toAccountPuk, Amount, sequence) {
+    const params = {
+        address: toAccountPuk,
+        amount: parseInt(Amount)
+    }
+    const paymentTx = createTx(sequence,'payment',params);
+    sign(paymentTx,privateKey);
+    console.log('Send tx',encode(paymentTx).toString('base64'));
+    return null;
+    // return client.broadcastTxCommit({tx: encode(paymentTx).toString('base64')})
 }
