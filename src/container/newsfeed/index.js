@@ -13,7 +13,7 @@ import Icon from '@material-ui/core/Icon';
 import Line from '../../components/line';
 import { Link, Redirect } from 'react-router-dom';
 import Follow from "../../components/follow";
-import { getAccountInfomation, getAllNewsfeed } from '../../services';
+import { getAccountInfomation, getAllNewsfeed, getSomeUserRecommend } from '../../services';
 import ReactLoading from 'react-loading';
 const styles = theme => ({
     root: {
@@ -57,19 +57,26 @@ class NewFeed extends React.Component {
         })
     }
 
+    getListRecommendUsers = () => {
+        console.log('Recommend user', this.props.recommendUsers);
+        return <Follow follows={this.props.recommendUsers} />
+    }
+
     getListFollows = () => {
-        console.log(this.props.listFollows);
         return <Follow follows={this.props.listFollows} />
     }
 
     loadingData = async () => {
         const accountData = await getAccountInfomation(this.privateKey);
         const nf = await getAllNewsfeed(0,20);
+        const ru = await getSomeUserRecommend();
+        console.log('GOT REC USERS',ru);
         if (accountData === null)
             alert('Wrong private key');
         else {
             this.props.dispatch({ type: 'GET_INFO', data: accountData });
             this.props.dispatch({ type: 'ADD_POST_NEWSFEED', data: nf});
+            this.props.dispatch({ type: 'GET_RECOMMEND_USERS', data: ru})
         }
         this.setState({ isLoading: false });
     }
@@ -147,9 +154,9 @@ class NewFeed extends React.Component {
                                 <Grid item xs>
                                     {/*<Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>*/}
                                     <div style={{ position: 'fixed', width: 251 }}>
-                                        <div>Followers</div>
+                                        <div>Recommend users</div>
                                         <div>
-                                            {this.getListFollows()}
+                                            {this.getListRecommendUsers()}
                                         </div>
                                     </div>
                                 </Grid>
@@ -173,6 +180,7 @@ const mapStateToProps = state => {
         listFollows: state.follows,
         account: state.account,
         newsfeed: state.newsfeed,
+        recommendUsers: state.recommendUsers
     }
 }
 

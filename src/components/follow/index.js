@@ -24,6 +24,12 @@ const styles = theme => ({
         width: 100,
         height: 100,
     },
+    avatarImg: {
+        height: '100%',
+        width: '100%',
+        borderRadius: '50%',
+        objectFit: 'cover',
+    },
 });
 
 class Follow extends React.Component{
@@ -35,16 +41,21 @@ class Follow extends React.Component{
     state = { expanded: false };
 
     getListFollow = () =>{
-        if(this.props.follows!==undefined)
+        if(this.props.follows)
         return this.props.follows.map(follow=>{
             return <div>
                 <ListItem>
                     <Avatar style={{width: 50, height: 50, backgroundColor: "red"}} 
                     aria-label="Recipe" className={this.props.classes.avatar2}>
-                        {follow.avatar}
+                        <img className={this.props.classes.avatarImg} 
+                        src={
+                            follow.avatar.data?
+                            `data:image/jpg;base64,${follow.avatar.data}`:
+                            'https://i.pinimg.com/originals/ab/e9/2f/abe92f535382cba9615e8767c21a6304.jpg'
+                            }/>
                     </Avatar>
                     <div>
-                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>{follow.name}</div>
+                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>{follow.username}</div>
                         <div style={{fontSize: 13, paddingLeft: 3, color: 'green'}}>Follow</div>
                     </div>
                 </ListItem>
