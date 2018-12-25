@@ -57,7 +57,7 @@ class Wall extends React.Component {
         console.log(this.props.match.params)
     }
 
-    getListPosts = () => {MyWaMyWall
+    getListPosts = () => {
         if(this.props.wall != null)
             return this.props.wall.posts.map(post=>{
                 return <div>
@@ -86,9 +86,9 @@ class Wall extends React.Component {
     }
 
     loadingData = async () => {
-        const accountData = await getAccount(this.props.publicKey);
+        const accountData = await getAccount(this.props.match.params.publicKey);
         if (accountData === null)
-            alert('Wrong public key');
+            console.log('Cannot load account');
         else {
             this.props.dispatch({ type: 'GET_ACCOUNT_WALL', data: accountData });
         }
@@ -96,6 +96,7 @@ class Wall extends React.Component {
     }
 
     componentDidMount(){
+        console.log('In wall of', this.props.match.params.publicKey)
         this.loadingData();
     }
 
@@ -108,6 +109,7 @@ class Wall extends React.Component {
                     <Navigation />
                     <div className={this.classes.myWallContent}>
                         <CoverWall
+                            isHidden={true}
                             imageBase64={
                                 this.props.wall != null ?
                                 this.props.wall.avatar.data : 
@@ -146,7 +148,7 @@ class Wall extends React.Component {
     }
 }
 
-MyWall.propTypes = {
+Wall.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 

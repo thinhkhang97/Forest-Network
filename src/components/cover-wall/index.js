@@ -101,6 +101,7 @@ class CoverWall extends React.Component {
                             <div>
                                 <Link to='/mywall/timeline'>
                                     <Button className={this.classes.button}
+                                    style={{visibility: this.props.isHidden? 'hidden':'visible'}}
                                     onClick={()=>{
                                         console.log('click');
                                         this.props.dispatch({type:'GET_PAGE', page: 'timeline'})
@@ -110,7 +111,8 @@ class CoverWall extends React.Component {
                                     </Button>
                                 </Link>
                                 <Link to='/mywall/edit-profile'>
-                                    <Button className={this.classes.button} 
+                                    <Button className={this.classes.button}
+                                    style={{visibility: this.props.isHidden? 'hidden':'visible'}}
                                     onClick={()=>{
                                         console.log('click');
                                         this.props.dispatch({type:'GET_PAGE', page: 'edit-profile'})
@@ -118,15 +120,12 @@ class CoverWall extends React.Component {
                                         Edit profile
                                     </Button>
                                 </Link>
-                                <Link to='/mywall/About'>
-                                    <Button className={this.classes.button}>
-                                        About
-                                    </Button>
-                                </Link>
                             </div>
                             <div className={this.classes.numberFollow}>
                                 {this.props.followers != null ? this.props.followers : 1000} followers
-                                <Button variant='contained' color='primary' className={this.classes.primaryButton}>
+                                <Button 
+                                style={{visibility: this.props.isMe?'hidden':'visible'}}
+                                variant='contained' color='primary' className={this.classes.primaryButton}>
                                     Follow
                                 </Button>
                             </div>

@@ -168,7 +168,7 @@ class Navigation extends React.Component {
                         {/*</IconButton>*/}
                         <Link to='/'>
                             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                                BitzNet
+                                Forest
                             </Typography>
                         </Link>
                         <div className={classes.search}>

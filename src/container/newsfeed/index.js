@@ -62,10 +62,6 @@ class NewFeed extends React.Component {
         return <Follow follows={this.props.recommendUsers} />
     }
 
-    getListFollows = () => {
-        return <Follow follows={this.props.listFollows} />
-    }
-
     loadingData = async () => {
         const accountData = await getAccountInfomation(this.privateKey);
         const nf = await getAllNewsfeed(0,20);
@@ -137,12 +133,12 @@ class NewFeed extends React.Component {
                                             />
                                         </Link>
                                     </div>
-                                    <div style={{ position: 'fixed', width: 251 }}>
+                                    {/* <div style={{ position: 'fixed', width: 251 }}>
                                         <div>Following</div>
                                         <div>
                                             {this.getListFollows()}
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </Grid>
                                 <Grid item xs={6} >
                                     <PostInPut />

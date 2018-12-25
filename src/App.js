@@ -8,6 +8,7 @@ import Login from './components/authentication/login';
 import Register from './components/authentication/register';
 import NewsFeed from './container/newsfeed';
 import MyWall from './container/mywall/index';
+import Wall from './container/mywall/wall';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './reducer';
@@ -33,6 +34,13 @@ class App extends Component {
               render={() => {
                 if (this.checkIsLogined() === true)
                   return <Route path="/mywall/:page" component={MyWall}/>
+                else return <Redirect to='/signin' />
+              }}
+            />
+            <Route path="/wall/:publicKey"
+              render={() => {
+                if (this.checkIsLogined() === true)
+                  return <Route path="/wall/:publicKey" component={Wall}/>
                 else return <Redirect to='/signin' />
               }}
             />

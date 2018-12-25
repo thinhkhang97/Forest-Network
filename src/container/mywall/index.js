@@ -113,6 +113,7 @@ class MyWall extends React.Component {
                     <Navigation />
                     <div className={this.classes.myWallContent}>
                         <CoverWall
+                            isMe={true}
                             imageBase64={
                                 this.props.account != null ?
                                 this.props.account.avatar.data : 

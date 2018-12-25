@@ -10,7 +10,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import Divider from '@material-ui/core/Divider';
 import red from "@material-ui/core/colors/red";
-
+import { Link } from 'react-router-dom';
 const styles = theme => ({
     root: {
         // width: '100%',
@@ -43,7 +43,7 @@ class Follow extends React.Component{
     getListFollow = () =>{
         if(this.props.follows)
         return this.props.follows.map(follow=>{
-            return <div>
+            return <Link to={`/wall/${follow.publicKey}`}>
                 <ListItem>
                     <Avatar style={{width: 50, height: 50, backgroundColor: "red"}} 
                     aria-label="Recipe" className={this.props.classes.avatar2}>
@@ -55,12 +55,11 @@ class Follow extends React.Component{
                             }/>
                     </Avatar>
                     <div>
-                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>{follow.username}</div>
-                        <div style={{fontSize: 13, paddingLeft: 3, color: 'green'}}>Follow</div>
+                        <div style={{fontSize: 15, paddingLeft: 3, color: 'black'}}>{follow.username?follow.username:'Anonymous'}</div>
                     </div>
                 </ListItem>
                 <Divider variant="inset" component="li" />
-            </div>
+            </Link>
         })
     }
 
