@@ -13,7 +13,7 @@ import Icon from '@material-ui/core/Icon';
 import Line from '../../components/line';
 import { Link, Redirect } from 'react-router-dom';
 import Follow from "../../components/follow";
-import { getAccountInfomation } from '../../services';
+import { getAccountInfomation, getAllNewsfeed } from '../../services';
 import ReactLoading from 'react-loading';
 const styles = theme => ({
     root: {
@@ -43,6 +43,15 @@ class NewFeed extends React.Component {
     }
 
     getListPosts = () => {
+        if(this.props.newsfeed) {
+            return this.props.newsfeed.map(post=>{
+                return <Post 
+                username={post.username} 
+                post={post} 
+                imageBase64={post.avatar.data}
+                />
+            })
+        }
         return this.props.listPosts.map(post => {
             return <Post post={post} />
         })
@@ -55,10 +64,12 @@ class NewFeed extends React.Component {
 
     loadingData = async () => {
         const accountData = await getAccountInfomation(this.privateKey);
+        const nf = await getAllNewsfeed(0,20);
         if (accountData === null)
             alert('Wrong private key');
         else {
             this.props.dispatch({ type: 'GET_INFO', data: accountData });
+            this.props.dispatch({ type: 'ADD_POST_NEWSFEED', data: nf});
         }
         this.setState({ isLoading: false });
     }
@@ -102,7 +113,7 @@ class NewFeed extends React.Component {
                                                 userName={this.props.account != null ? this.props.account.username : null}
                                                 imageBase64={
                                                     this.props.account != null ?
-                                                        this.props.account.avatar.data.data :
+                                                        this.props.account.avatar.data :
                                                         null
                                                 }
                                                 numberFollowers={
@@ -156,11 +167,12 @@ NewFeed.propTypes = {
 };
 
 const mapStateToProps = state => {
-    console.log('IN NEWSFEED', state.account);
+    console.log('IN NEWSFEED', state.account, state.newsfeed);
     return {
         listPosts: state.posts,
         listFollows: state.follows,
-        account: state.account
+        account: state.account,
+        newsfeed: state.newsfeed,
     }
 }
 

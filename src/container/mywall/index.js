@@ -58,6 +58,17 @@ class MyWall extends React.Component {
     }
 
     getListPosts = () => {
+        if(this.props.account != null)
+            return this.props.account.posts.map(post=>{
+                return <div>
+                <Post 
+                username={this.props.account.username} 
+                post={post} 
+                imageBase64={this.props.account.avatar.data}/>
+                <div className={this.classes.line} />
+            </div>
+            })
+        else 
         return this.props.listPosts.map(post => {
             return <div>
                 <Post post={post} />
@@ -104,7 +115,7 @@ class MyWall extends React.Component {
                         <CoverWall
                             imageBase64={
                                 this.props.account != null ?
-                                this.props.account.avatar.data.data : 
+                                this.props.account.avatar.data : 
                                 null
                             }
                             followers={

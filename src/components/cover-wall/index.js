@@ -135,7 +135,7 @@ class CoverWall extends React.Component {
                     <div style={{marginLeft: 20}}>
                         <img className={this.classes.avatar} src={
                             this.props.imageBase64!=null?
-                            `data:image/jpeg;base64,${this.arrayBufferToBase64(this.props.imageBase64)}`:
+                            `data:image/jpeg;base64,${this.props.imageBase64}`:
                             'https://i.pinimg.com/originals/ab/e9/2f/abe92f535382cba9615e8767c21a6304.jpg'
                             }/>
                     </div>

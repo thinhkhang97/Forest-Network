@@ -80,7 +80,13 @@ const styles = theme => ({
         height: 10
     },
     img: {
-    }
+    },
+    avatarImg: {
+        height: '100%',
+        width: '100%',
+        borderRadius: '50%',
+        objectFit: 'cover',
+    },
 });
 
 class Post extends React.Component {
@@ -91,7 +97,8 @@ class Post extends React.Component {
     };
 
     getListComment(){
-        const listComments = this.props.post.comments;
+        const listComments = this.props.post.comment;
+        if(listComments)
         return listComments.map(comment=>{
             return <div>
                 <ListItem alignItems="flex-start">
@@ -113,6 +120,13 @@ class Post extends React.Component {
         })
     }
 
+    arrayBufferToBase64(buffer) {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     render() {
         const { classes } = this.props;
 
@@ -121,7 +135,12 @@ class Post extends React.Component {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="Recipe" className={this.props.classes.avatar}>
-                            {this.props.post.avatar}
+                            <img  className={this.props.classes.avatarImg}
+                            src={
+                            this.props.imageBase64!=null ?
+                            `data:image/jpg;base64,${this.props.imageBase64}`:
+                            'https://i.pinimg.com/originals/ab/e9/2f/abe92f535382cba9615e8767c21a6304.jpg'
+                            }/>
                         </Avatar>
                     }
                     action={
@@ -129,18 +148,18 @@ class Post extends React.Component {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={this.props.post.name}
-                    subheader={this.props.post.datePost}
+                    title={ this.props.username +': '+this.props.post.title}
+                    subheader={this.props.post.time}
                 />
                 <CardMedia
                     className={this.props.classes.media}
                     // image="/static/images/cards/paella.jpg"
                     title="Paella dish"
-                    image='https://kenh14cdn.com/2018/6/27/photo-1-1530035696818119569395.jpg'
+                    image='https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg'
                 />
                 <CardContent>
                     <Typography component="p">
-                        {this.props.post.status}
+                        {this.props.post.content}
                     </Typography>
                 </CardContent>
                 <CardActions className={this.props.classes.actions} disableActionSpacing>
