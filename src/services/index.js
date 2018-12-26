@@ -9,6 +9,10 @@ const PlainTextContent = vstruct([
     { name: 'text', type: vstruct.VarString(vstruct.UInt16BE) },
 ]);
 
+const Followings = vstruct([
+    { name: 'addresses', type: vstruct.VarArray(vstruct.UInt16BE, vstruct.Buffer(35)) },
+  ]);
+
 export async function getAccount(publicKey) {
     try{
     const r = await axios.get(`http://localhost:5000/forestnetworking/account/${publicKey}`, config
@@ -153,5 +157,18 @@ export async function changeImage(privateKey, imageData, sequence) {
     const changeImageTx = createTx(parseInt(sequence),'update_account',params);
     sign(changeImageTx,privateKey);
     const r = await postTx(changeImageTx);
+    return r; 
+}
+export async function changeFollowing(privateKey, fData, sequence) {
+    const fBuffer = Followings.encode({
+        addresses: fData
+    })
+    const params = {
+        key: 'followings',
+        value: fBuffer
+    }
+    const changeFollowingTx = createTx(parseInt(sequence),'update_account',params);
+    sign(changeFollowingTx,privateKey);
+    const r = await postTx(changeFollowingTx);
     return r; 
 }

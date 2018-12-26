@@ -170,9 +170,9 @@ class NewFeed extends React.Component {
                                                 />
                                             </Link>
                                         </div>
-                                        <div style={{ position: 'fixed', width: 300, marginTop: 50 }}>
+                                        <div style={{ position: 'fixed', width: 300, marginTop: 50,  height: '60%', overflow: 'auto' }}>
                                             <div>Following</div>
-                                            <div>
+                                            <div style={{overflow: 'auto'}}>
                                                 {this.getListFollowing()}
                                             </div>
                                         </div>

@@ -150,6 +150,7 @@ class Wall extends React.Component {
                                     return o.publicKey === this.props.wall.publicKey
                                 })
                             }
+                            publicKey={this.props.wall.publicKey}
                         />
                         <div className={this.classes.contentContainer}>
                             <div className={this.classes.partLeft}>

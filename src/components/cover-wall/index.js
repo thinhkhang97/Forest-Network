@@ -6,7 +6,9 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import swal from '@sweetalert/with-react';
 import FileBase64 from 'react-file-base64';
-import {changeImage} from '../../services'
+import {changeImage, changeFollowing} from '../../services';
+const base32 = require('base32.js');
+
 const styles = {
     root: {
         flexGrow: 1,
@@ -92,7 +94,8 @@ class CoverWall extends React.Component {
         super(props)
         this.classes = this.props.classes
         this.state = {
-            imgData: []
+            imgData: [],
+            isFollowing: false,
         }
     }
 
@@ -116,6 +119,40 @@ class CoverWall extends React.Component {
                 }
             });
         }
+    }
+
+    componentDidMount(){
+        this.setState({isFollowing: this.props.isFollowing})
+    }
+
+    handleFollowing(){
+        let curF=[]
+        // Add following
+        if(!this.state.isFollowing) {
+            curF = this.props.account.following.map(f=>{
+                return Buffer.from(base32.decode(f.publicKey))
+            });
+            curF.push(Buffer.from(base32.decode(this.props.publicKey)))
+        }
+        // Remove
+        else {
+            curF = this.props.account.following;
+            curF = curF.filter(f=>{
+                return f.publicKey !== this.props.publicKey
+            })
+            curF = curF.map(f=>{
+                return Buffer.from(base32.decode(f.publicKey))
+            });
+        }
+        const pk = localStorage.getItem('privateKey');
+        changeFollowing(pk,curF,this.props.account.sequence+1).then(r=>{
+            if(r.data.success==='OK') {
+                swal('Great!!!','Change following successfully', 'success');
+            }else {
+                swal('Oops???','Change following fail','error');
+            }
+            this.setState({isFollowing: !this.state.isFollowing});
+        })
     }
 
     render() {
@@ -155,8 +192,10 @@ class CoverWall extends React.Component {
                                 {this.props.followers != null ? this.props.followers : 1000} followers
                                 <Button 
                                 style={{visibility: this.props.isMe?'hidden':'visible'}}
-                                variant='contained' color='primary' className={this.classes.primaryButton}>
-                                    {this.props.isFollowing?'Following':'Follow'}
+                                variant='contained' color='primary' className={this.classes.primaryButton}
+                                onClick={()=>this.handleFollowing()}
+                                >
+                                    {this.state.isFollowing?'Following':'Follow'}
                                 </Button>
                                 <Button 
                                 style={{visibility: this.props.isMe?'hidden':'visible'}}
