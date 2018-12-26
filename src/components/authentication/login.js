@@ -17,6 +17,7 @@ import ReactLoading from 'react-loading';
 import Register from './register'
 import {getAccountInfomation} from '../../services';
 import {connect} from 'react-redux';
+import swal from 'sweetalert';
 const styles = theme => ({
     main: {
         width: 'auto',
@@ -67,8 +68,10 @@ class SignIn extends React.Component {
 
     loadingData = async ()=>{
         const accountData = await getAccountInfomation(this.state.privateKey);
-        if(accountData === null)
-            alert('Wrong private key');
+        if(accountData === null) {
+            swal('Signed Fail', 'Please check your private key', 'error');
+            this.setState({isLoading: false});
+        }
         else {
             this.props.dispatch({type: 'GET_INFO', data: accountData});
             console.log('Set private key to local', this.state.privateKey);
@@ -120,11 +123,6 @@ class SignIn extends React.Component {
                                     >
                                         Sign in
                                 </Button>
-                                <Link to='/signup'>
-                                    <Button fullWidth variant="outlined" color="primary" className={this.props.classes.submit}>
-                                        Sign up
-                                </Button>
-                                </Link>
                             </form>
                         </Paper>
 

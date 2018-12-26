@@ -30,7 +30,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-
+import moment from 'moment';
 
 const styles = theme => ({
     card: {
@@ -149,13 +149,7 @@ class Post extends React.Component {
                         </IconButton>
                     }
                     title={ this.props.username +': '+this.props.post.title}
-                    subheader={this.props.post.time}
-                />
-                <CardMedia
-                    className={this.props.classes.media}
-                    // image="/static/images/cards/paella.jpg"
-                    title="Paella dish"
-                    image='https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg'
+                    subheader={moment(this.props.post.time).fromNow()}
                 />
                 <CardContent>
                     <Typography component="p">

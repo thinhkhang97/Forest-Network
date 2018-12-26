@@ -16,7 +16,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import swal from 'sweetalert';
 const styles = theme => ({
     root: {
         width: '100%',
@@ -128,7 +129,15 @@ class Navigation extends React.Component {
                 onClose={this.handleMenuClose}
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleMenuClose}>Sign out</MenuItem>
+                <MenuItem onClick={()=>{
+                    swal("Notification", 'Do you want to sign out?')
+                    .then((value) => {
+                      if(value) {
+                          localStorage.removeItem('privateKey');
+                          this.props.history.push('/signin');
+                      }
+                    });
+                }}>Sign out</MenuItem>
             </Menu>
         );
 
@@ -222,4 +231,4 @@ Navigation.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Navigation);
+export default withRouter(withStyles(styles)(Navigation));

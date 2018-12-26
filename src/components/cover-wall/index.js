@@ -19,6 +19,7 @@ const styles = {
     avatar: {
         height: 200,
         width: 200,
+        backgroundColor: 'white',
         borderRadius: '50%',
         borderColor: 'white',
         border: '10px solid #fff',

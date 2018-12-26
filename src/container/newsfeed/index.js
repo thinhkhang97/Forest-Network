@@ -15,6 +15,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Follow from "../../components/follow";
 import { getAccountInfomation, getAllNewsfeed, getSomeUserRecommend } from '../../services';
 import ReactLoading from 'react-loading';
+import InfiniteScroll from 'react-infinite-scroller';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -31,11 +32,11 @@ const styles = theme => ({
 });
 
 class NewFeed extends React.Component {
-
     privateKey = null;
     state = {
         isLoading: false,
-        isLogined: false
+        isLogined: false,
+        allPosts: []
     }
     constructor(props) {
         super(props);
@@ -43,18 +44,23 @@ class NewFeed extends React.Component {
     }
 
     getListPosts = () => {
-        if(this.props.newsfeed) {
-            return this.props.newsfeed.map(post=>{
-                return <Post 
-                username={post.username} 
-                post={post} 
-                imageBase64={post.avatar.data}
+        if (this.state.allPosts.length>0) {
+            return this.state.allPosts.map(post => {
+                return <Post
+                    username={post.username}
+                    post={post}
+                    imageBase64={post.avatar.data}
                 />
             })
         }
         return this.props.listPosts.map(post => {
             return <Post post={post} />
         })
+    }
+
+    loadMoreData = async (page) =>{
+        const nf = await getAllNewsfeed(page, 10);
+        this.setState({allPosts: this.state.allPosts.concat(nf)});
     }
 
     getListRecommendUsers = () => {
@@ -64,15 +70,15 @@ class NewFeed extends React.Component {
 
     loadingData = async () => {
         const accountData = await getAccountInfomation(this.privateKey);
-        const nf = await getAllNewsfeed(0,20);
+        // const nf = await getAllNewsfeed(0, 20);
         const ru = await getSomeUserRecommend();
-        console.log('GOT REC USERS',ru);
+        console.log('GOT REC USERS', ru);
         if (accountData === null)
             alert('Wrong private key');
         else {
             this.props.dispatch({ type: 'GET_INFO', data: accountData });
-            this.props.dispatch({ type: 'ADD_POST_NEWSFEED', data: nf});
-            this.props.dispatch({ type: 'GET_RECOMMEND_USERS', data: ru})
+            // this.props.dispatch({ type: 'ADD_POST_NEWSFEED', data: nf });
+            this.props.dispatch({ type: 'GET_RECOMMEND_USERS', data: ru })
         }
         this.setState({ isLoading: false });
     }
@@ -92,9 +98,9 @@ class NewFeed extends React.Component {
 
     componentDidMount() {
         // Check is has data
-        if(this.props.account === null) {
+        if (this.props.account === null) {
             this.privateKey = localStorage.getItem('privateKey');
-            this.setState({isLoading: true});
+            this.setState({ isLoading: true });
             this.loadingData();
         }
     }
@@ -103,63 +109,90 @@ class NewFeed extends React.Component {
         return (
             <div className={this.classes.root}>{
                 this.state.isLoading ?
-                <ReactLoading type='spinningBubbles' height='20%' width='20%' color='red'/> :
-                <div>
-                    <Navigation />
-                    <div className={this.classes.newsfeedContainer}>
-                        <div style={{ marginTop: 80 }}>
-                            <Grid container spacing={24}>
-                                <Grid item xs>
-                                    <div style={{ paddingBottom: 110 }}>
-                                        <Link to='/mywall/timeline'>
-                                            <LinkToMyWall
-                                                userName={this.props.account != null ? this.props.account.username : null}
-                                                imageBase64={
-                                                    this.props.account != null ?
-                                                        this.props.account.avatar.data :
-                                                        null
-                                                }
-                                                numberFollowers={
-                                                    this.props.account != null ?
-                                                        this.props.account.followers.length : null}
-                                                numberFollowings={
-                                                    this.props.account != null ?
-                                                        this.props.account.following.length : null
-                                                }
-                                                balance={
-                                                    this.props.account != null ?
-                                                        this.props.account.balance : null
-                                                }
-                                            />
-                                        </Link>
-                                    </div>
-                                    {/* <div style={{ position: 'fixed', width: 251 }}>
+                    <ReactLoading type='spinningBubbles' height='20%' width='20%' color='red' /> :
+                    <div>
+                        <Navigation />
+                        <div className={this.classes.newsfeedContainer}>
+                            <div style={{ marginTop: 80 }}>
+                                <Grid container spacing={24}>
+                                    <Grid item xs>
+                                        <div style={{ paddingBottom: 110 }}>
+                                            <Link to='/mywall/timeline'>
+                                                <LinkToMyWall
+                                                    userName={this.props.account != null ? this.props.account.username : null}
+                                                    imageBase64={
+                                                        this.props.account != null ?
+                                                            this.props.account.avatar.data :
+                                                            null
+                                                    }
+                                                    numberFollowers={
+                                                        this.props.account != null ?
+                                                            this.props.account.followers.length : null}
+                                                    numberFollowings={
+                                                        this.props.account != null ?
+                                                            this.props.account.following.length : null
+                                                    }
+                                                    balance={
+                                                        this.props.account != null ?
+                                                            this.props.account.balance : null
+                                                    }
+                                                    sequence={
+                                                        this.props.account != null ?
+                                                            this.props.account.sequence : null
+                                                    }
+                                                />
+                                            </Link>
+                                        </div>
+                                        {/* <div style={{ position: 'fixed', width: 251 }}>
                                         <div>Following</div>
                                         <div>
                                             {this.getListFollows()}
                                         </div>
                                     </div> */}
-                                </Grid>
-                                <Grid item xs={6} >
-                                    <PostInPut />
-                                    <Line />
-                                    <div style={{ paddingTop: 20 }}>
-                                        {this.getListPosts()}
-                                    </div>
-                                </Grid>
-                                <Grid item xs>
-                                    {/*<Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>*/}
-                                    <div style={{ position: 'fixed', width: 251 }}>
-                                        <div>Recommend users</div>
-                                        <div>
-                                            {this.getListRecommendUsers()}
+                                    </Grid>
+                                    <Grid item xs={6} >
+                                        <PostInPut />
+                                        <Line />
+                                        <div style={{ paddingTop: 20 }}>
+                                            <InfiniteScroll
+                                                pageStart={0}
+                                                loadMore={(page)=>this.loadMoreData(page)}
+                                                hasMore={true}
+                                                loader={
+                                                    <div style={{
+                                                        width: '100%',
+                                                        height: 50,
+                                                        display:'flex',
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center'
+                                                        }}>
+                                                        <ReactLoading type={'spinningBubbles'}
+                                                            color='blue'
+                                                            width={30}
+                                                            height={30}
+                                                        />
+                                                    </div>}>
+
+                                                <div className="tracks">
+                                                    {this.getListPosts()}
+                                                </div>
+                                            </InfiniteScroll>
+                                            
                                         </div>
-                                    </div>
+                                    </Grid>
+                                    <Grid item xs>
+                                        {/*<Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>*/}
+                                        <div style={{ position: 'fixed', width: 251 }}>
+                                            <div>Recommend users</div>
+                                            <div>
+                                                {this.getListRecommendUsers()}
+                                            </div>
+                                        </div>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            </div>
                         </div>
                     </div>
-                </div>
             }</div>
         );
     }

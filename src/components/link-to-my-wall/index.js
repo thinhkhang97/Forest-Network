@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = {
     menuContainer: {
         width: 300,
-        height: 100,
+        height: 150,
         display: 'flex',
         alignItems: 'center',
         paddingLeft: 10,
@@ -24,7 +24,7 @@ const styles = {
     },
     info:{
         fontSize: 12,
-        color: 'white',
+        color: 'gray',
         lineHeigth: 5,
         paddingLeft: 20
     }
@@ -67,10 +67,11 @@ class LinkToMyWall extends React.Component {
                     </div>
 
                     <div className={this.classes.info}>
-                        <h5 style={{fontSize: 12}}>{this.props.userName != null? this.props.userName : 'Nancy'}</h5>
+                        <h5 style={{fontSize: 14}}>{this.props.userName != null? this.props.userName : 'Nancy'}</h5>
                         <div>Follower: {this.props.numberFollowers != null ? this.props.numberFollowers : 100}</div>
                         <div>Following: {this.props.numberFollowings != null ? this.props.numberFollowings : 1000}</div>
                         <div>Money: {this.props.balance != null ? this.props.balance : 123878923}</div>
+                        <div>Sequece: {this.props.sequence != null ? this.props.sequence : 145}</div>
                     </div>
                 </div>
             </div>
