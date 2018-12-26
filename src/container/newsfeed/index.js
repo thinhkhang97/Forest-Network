@@ -36,7 +36,8 @@ class NewFeed extends React.Component {
     state = {
         isLoading: false,
         isLogined: false,
-        allPosts: []
+        allPosts: [],
+        listFollowing: [],
     }
     constructor(props) {
         super(props);
@@ -84,10 +85,15 @@ class NewFeed extends React.Component {
             this.setState({allPosts: this.state.allPosts.concat(nf)});
             this.props.dispatch({ type: 'GET_RECOMMEND_USERS', data: ru })
         }
+        await this.loadListFollowing();
         this.setState({ isLoading: false });
     }
 
-    getListFollowing = async()=>{
+    getListFollowing = () => {
+        return <Follow follows={this.state.listFollowing} />
+    }
+
+    loadListFollowing = async()=>{
         const listFling = this.props.account.following
         const listData = []
         for(let i = 0; i < listFling.length; i++) {
@@ -95,8 +101,10 @@ class NewFeed extends React.Component {
             if(data)
                 listData.push(data);
         }
-        if(listData.length>0)
-        return <Follow follows={listData} />
+        if(listData.length>0){
+            console.log('LIST FOLLOWING', listData);
+            this.setState({listFollowing: listData});
+        }
     }
 
     checkIsLogin = () => {
@@ -113,11 +121,15 @@ class NewFeed extends React.Component {
 
     componentDidMount() {
         // Check is has data
-        if (this.props.account === null) {
+        // if (this.props.account === null) {
+        //     this.privateKey = localStorage.getItem('privateKey');
+        //     this.setState({ isLoading: true });
+        //     this.loadingData();
+        // }
+
             this.privateKey = localStorage.getItem('privateKey');
             this.setState({ isLoading: true });
             this.loadingData();
-        }
     }
 
     render() {
@@ -158,12 +170,12 @@ class NewFeed extends React.Component {
                                                 />
                                             </Link>
                                         </div>
-                                        {/* <div style={{ position: 'fixed', width: 251 }}>
+                                        <div style={{ position: 'fixed', width: 300, marginTop: 50 }}>
                                             <div>Following</div>
                                             <div>
                                                 {this.getListFollowing()}
                                             </div>
-                                        </div> */}
+                                        </div>
                                     </Grid>
                                     <Grid item xs={6} >
                                         <PostInPut />
@@ -198,9 +210,9 @@ class NewFeed extends React.Component {
                                     </Grid>
                                     <Grid item xs>
                                         {/*<Paper className={this.classes.paper}>Danh sách chuyển tiền</Paper>*/}
-                                        <div style={{ position: 'fixed', width: 251 }}>
+                                        <div style={{ position: 'fixed', width: 300, height: '100%', overflow: 'auto' }}>
                                             <div>Recommend users</div>
-                                            <div>
+                                            <div style={{overflow: 'auto'}}>
                                                 {this.getListRecommendUsers()}
                                             </div>
                                         </div>

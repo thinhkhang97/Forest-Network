@@ -156,7 +156,7 @@ class CoverWall extends React.Component {
                                 <Button 
                                 style={{visibility: this.props.isMe?'hidden':'visible'}}
                                 variant='contained' color='primary' className={this.classes.primaryButton}>
-                                    Follow
+                                    {this.props.isFollowing?'Following':'Follow'}
                                 </Button>
                                 <Button 
                                 style={{visibility: this.props.isMe?'hidden':'visible'}}

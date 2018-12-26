@@ -130,45 +130,9 @@ class Wall extends React.Component {
                                                     swal('Oops???','Paid fail','error');
                                                 }
                                             })
-                                            // .then(res=>{
-                                            //     console.log('Result payment:', res);
-                                            //     swal({
-                                            //         title: "Done!",
-                                            //         text: "You have paid "+amount,
-                                            //         icon: "success",
-                                            //         button: "Ok",
-                                            //     });
-                                            // })
                                         }
                                       }
                                     })
-                                //   .then(results => {
-                                //     return results.json();
-                                //   })
-                                //   .then(json => {
-                                //     const movie = json.results[0];
-                                   
-                                //     if (!movie) {
-                                //       return swal("No movie was found!");
-                                //     }
-                                   
-                                //     const name = movie.trackName;
-                                //     const imageURL = movie.artworkUrl100;
-                                   
-                                //     swal({
-                                //       title: "Top result:",
-                                //       text: name,
-                                //       icon: imageURL,
-                                //     });
-                                //   })
-                                //   .catch(err => {
-                                //     if (err) {
-                                //       swal("Oh noes!", "The AJAX request failed!", "error");
-                                //     } else {
-                                //       swal.stopLoading();
-                                //       swal.close();
-                                //     }
-                                //   });
                             }}
                             isHidden={true}
                             imageBase64={
@@ -180,6 +144,11 @@ class Wall extends React.Component {
                                 this.props.wall != null ?
                                 this.props.wall.followers.length: 
                                 null
+                            }
+                            isFollowing={
+                                this.props.account.following.find((o)=>{
+                                    return o.publicKey === this.props.wall.publicKey
+                                })
                             }
                         />
                         <div className={this.classes.contentContainer}>
