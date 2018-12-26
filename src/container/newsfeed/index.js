@@ -53,14 +53,16 @@ class NewFeed extends React.Component {
                 />
             })
         }
-        return this.props.listPosts.map(post => {
-            return <Post post={post} />
-        })
+        // return this.props.listPosts.map(post => {
+        //     return <Post post={post} />
+        // })
     }
 
-    loadMoreData = async (page) =>{
-        const nf = await getAllNewsfeed(page, 10);
-        this.setState({allPosts: this.state.allPosts.concat(nf)});
+    loadMoreData(page){
+        getAllNewsfeed(page, 10).then(nf=>{
+            this.setState({allPosts: this.state.allPosts.concat(nf)});
+        })
+        
     }
 
     getListRecommendUsers = () => {
@@ -70,14 +72,15 @@ class NewFeed extends React.Component {
 
     loadingData = async () => {
         const accountData = await getAccountInfomation(this.privateKey);
-        // const nf = await getAllNewsfeed(0, 20);
+        const nf = await getAllNewsfeed(0, 20);
         const ru = await getSomeUserRecommend();
         console.log('GOT REC USERS', ru);
         if (accountData === null)
             alert('Wrong private key');
         else {
             this.props.dispatch({ type: 'GET_INFO', data: accountData });
-            // this.props.dispatch({ type: 'ADD_POST_NEWSFEED', data: nf });
+            //this.props.dispatch({ type: 'ADD_POST_NEWSFEED', data: nf });
+            this.setState({allPosts: this.state.allPosts.concat(nf)});
             this.props.dispatch({ type: 'GET_RECOMMEND_USERS', data: ru })
         }
         this.setState({ isLoading: false });
@@ -155,9 +158,10 @@ class NewFeed extends React.Component {
                                         <Line />
                                         <div style={{ paddingTop: 20 }}>
                                             <InfiniteScroll
-                                                pageStart={0}
-                                                loadMore={(page)=>this.loadMoreData(page)}
+                                                pageStart={1}
+                                                loadMore={this.loadMoreData.bind(this)}
                                                 hasMore={true}
+                                                initialLoad={false}
                                                 loader={
                                                     <div style={{
                                                         width: '100%',

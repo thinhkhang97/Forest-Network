@@ -15,6 +15,8 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import { withStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button/Button";
 import {styles} from './style';
+import swal from 'sweetalert';
+import {changeName} from '../../services';
 class EditBasicInfo extends React.Component {
 
     state={
@@ -22,6 +24,7 @@ class EditBasicInfo extends React.Component {
         month: 3,
         year: 1997,
         selectedValue: 'female',
+        username: ''
     }
 
     constructor(props) {
@@ -75,7 +78,7 @@ class EditBasicInfo extends React.Component {
                     <div className={this.classes.line}/>
                 </div>
                 <div className={this.classes.editBlock}>
-                    <div className={this.classes.divideRow}>
+                    {/* <div className={this.classes.divideRow}>
                         <div className={this.classes.partLeft}>
                             <TextField
                                 id="standard-name"
@@ -105,10 +108,10 @@ class EditBasicInfo extends React.Component {
                                     }}}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     <TextField
                         id="standard-name"
-                        label="My email"
+                        label="Change name"
                         // className={classes.textField}
                         // value={this.state.name}
                         // onChange={this.handleChange('name')}
@@ -117,10 +120,13 @@ class EditBasicInfo extends React.Component {
                         InputProps={{classes:{
                                 input: this.classes.resize,
                             }}}
+                        onChange={(e)=>{
+                            this.setState({username: e.target.value});
+                        }}
                     />
                     <br/>
                     <br/>
-                    <div style={{ marginTop: 10}}>
+                    {/* <div style={{ marginTop: 10}}>
                         <b>Date of birth</b>
                     </div>
 
@@ -168,8 +174,8 @@ class EditBasicInfo extends React.Component {
                                 {this.generateYear()}
                             </Select>
                         </FormControl>
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <b>I am a:</b>
                         <Radio
                             checked={this.state.selectedValue === 'male'}
@@ -191,8 +197,8 @@ class EditBasicInfo extends React.Component {
                             checkedIcon={<RadioButtonCheckedIcon fontSize="small" />}
                         />
                         Female
-                    </div>
-                    <div className={this.classes.divideRow}>
+                    </div> */}
+                    {/* <div className={this.classes.divideRow}>
                         <div className={this.classes.partLeft}>
                             <TextField
                                 id="standard-name"
@@ -215,8 +221,8 @@ class EditBasicInfo extends React.Component {
                                 fullWidth={true}
                             />
                         </div>
-                    </div>
-                    <TextField
+                    </div> */}
+                    {/* <TextField
                         id="standard-name"
                         label="Your description"
                         // className={classes.textField}
@@ -225,9 +231,26 @@ class EditBasicInfo extends React.Component {
                         margin="none"
                         multiline={true}
                         fullWidth={true}
-                    />
+                    /> */}
                 </div>
-                <Button variant='contained' color='primary' className={this.classes.primaryButton}>
+                <Button variant='contained' color='primary' className={this.classes.primaryButton}
+                    onClick={()=>{
+                        swal('Ask', `Do you want to change name to ${this.state.username}?`).then(value=>{
+                            console.log('Value',value);
+                            if(value) {
+                                const pk = localStorage.getItem('privateKey');
+                                changeName(pk,this.state.username,21).then(r=>{
+                                    console.log('Change name r', r);
+                                    if(r.data.success === 'OK') {
+                                        swal('Success', 'Changed name','success');
+                                    } else {
+                                        swal('Fail', 'Fail to change name','error')
+                                    }
+                                })
+                            }
+                        })
+                    }}
+                >
                     Save Changes
                 </Button>
             </div>

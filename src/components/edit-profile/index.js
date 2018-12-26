@@ -9,7 +9,7 @@ class EditProfile extends React.Component {
     render() {
         return (
             <div>
-                {this.props.page === 'basic-info'?<EditBasicInfo/>:<ChangePassword/> }
+                <EditBasicInfo/>
             </div>
         )
     }

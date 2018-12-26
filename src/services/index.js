@@ -95,14 +95,34 @@ function createTx(Sequence, Operation, Params){
         params: Params
     }
 }
-export function payment(privateKey, toAccountPuk, Amount, sequence) {
+
+async function postTx(tx) {
+    const r = await axios.post('http://localhost:5000/forestnetworking/tx/', {
+        txData: encode(tx).toString('base64')
+    });
+    return r;
+}
+export async function payment(privateKey, toAccountPuk, Amount, sequence) {
     const params = {
         address: toAccountPuk,
         amount: parseInt(Amount)
     }
-    const paymentTx = createTx(sequence,'payment',params);
+    const paymentTx = createTx(parseInt(sequence),'payment',params);
     sign(paymentTx,privateKey);
-    console.log('Send tx',encode(paymentTx).toString('base64'));
-    return null;
+    // console.log('Send tx',encode(paymentTx).toString('base64'));
+    const r = await postTx(paymentTx);
+    return r;
     // return client.broadcastTxCommit({tx: encode(paymentTx).toString('base64')})
+}
+export async function changeName(privateKey, newName, sequence) {
+    const params = {
+        key: 'name',
+        value: Buffer.from(newName)
+    }
+    const changeNameTx = createTx(parseInt(sequence),'update_account',params);
+    sign(changeNameTx,privateKey);
+    const r = await postTx(changeNameTx);
+    return r;
+    // console.log('Send tx',encode(paymentTx).toString('base64'));
+    
 }
