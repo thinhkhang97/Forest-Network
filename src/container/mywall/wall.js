@@ -109,8 +109,7 @@ class Wall extends React.Component {
                     <div className={this.classes.myWallContent}>
                         <CoverWall
                             onClickPayment={()=>{
-                                console.log('Payment from', this.props.account.publicKey,'to',
-                                this.props.wall.publicKey)
+                                console.log('Payment from', this.props.account.publicKey,'to',this.props.wall.publicKey)
 
                                 swal({
                                     text: `Payment from ${this.props.account.publicKey} to ${this.props.wall.publicKey}`,
@@ -124,7 +123,13 @@ class Wall extends React.Component {
                                       if(amount) {
                                         const pk = localStorage.getItem('privateKey');
                                         if(pk) {
-                                            payment(pk,this.props.wall.publicKey,amount,16)
+                                            payment(pk,this.props.wall.publicKey,amount,this.props.account.sequence+1).then(r=>{
+                                                if(r.data.success==='OK') {
+                                                    swal('Great!!!','Paid successfully', 'success');
+                                                }else {
+                                                    swal('Oops???','Paid fail','error');
+                                                }
+                                            })
                                             // .then(res=>{
                                             //     console.log('Result payment:', res);
                                             //     swal({

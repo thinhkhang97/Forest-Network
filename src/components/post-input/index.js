@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import {publishContent} from '../../services';
 import swal from 'sweetalert';
+import {connect} from 'react-redux';
 
 const styles = theme => ({
     avatar: {
@@ -95,7 +96,7 @@ class PostInPut extends React.Component{
                 <Button variant='contained' color='primary' className={this.props.classes.primaryButton}
                     onClick={()=>{
                         const pk = localStorage.getItem('privateKey');
-                        publishContent(pk,this.state.content,22).then(r=>{
+                        publishContent(pk,this.state.content,this.props.account.sequence+1).then(r=>{
                             if(r.data.success==='OK') {
                                 swal('Great!!!','Publish successfully', 'success');
                             }else {
@@ -116,5 +117,9 @@ class PostInPut extends React.Component{
 PostInPut.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(PostInPut);
+const mapStateToProps = state=>{
+    return {
+        account: state.account
+    }
+}
+export default connect(mapStateToProps)(withStyles(styles)(PostInPut));

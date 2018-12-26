@@ -150,7 +150,7 @@ class Post extends React.Component {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title={ this.props.username +': '+this.props.post.title}
+                    title={ this.props.username}
                     subheader={moment(this.props.post.time).fromNow()}
                 />
                 </Link>

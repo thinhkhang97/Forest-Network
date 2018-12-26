@@ -145,3 +145,13 @@ export async function publishContent(privateKey, content, sequence) {
     const r = await postTx(publishTx);
     return r;
 }
+export async function changeImage(privateKey, imageData, sequence) {
+    const params = {
+        key: 'picture',
+        value: Buffer.from(imageData,'base64')
+    }
+    const changeImageTx = createTx(parseInt(sequence),'update_account',params);
+    sign(changeImageTx,privateKey);
+    const r = await postTx(changeImageTx);
+    return r; 
+}

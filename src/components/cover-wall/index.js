@@ -4,6 +4,9 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import swal from '@sweetalert/with-react';
+import FileBase64 from 'react-file-base64';
+import {changeImage} from '../../services'
 const styles = {
     root: {
         flexGrow: 1,
@@ -88,7 +91,33 @@ class CoverWall extends React.Component {
     constructor(props) {
         super(props)
         this.classes = this.props.classes
+        this.state = {
+            imgData: []
+        }
     }
+
+    getFiles(files){
+        // console.log('FILE IMAGE',files);
+        if(files.file.size>1024*20) {
+            swal('Oops???','File is bigger than 20kb', 'error');
+        } else {
+            // console.log(files.base64.replace('data:image/jpeg;base64,',''))
+            this.setState({ imgData: files.base64.replace('data:image/jpeg;base64,','') });
+            swal('Ask','Do you want to change your avatar?').then(value=>{
+                if(value) {
+                    const pk = localStorage.getItem('privateKey');
+                    changeImage(pk, this.state.imgData, this.props.account.sequence+1).then(r=>{
+                        if(r.data.success==='OK') {
+                            swal('Great!!!','Change avatar successfully', 'success');
+                        }else {
+                            swal('Oops???','Change avatar fail','error');
+                        }
+                    })
+                }
+            });
+        }
+    }
+
     render() {
         return (
             <div className={this.classes.root}>
@@ -143,7 +172,18 @@ class CoverWall extends React.Component {
                             this.props.imageBase64!=null?
                             `data:image/jpeg;base64,${this.props.imageBase64}`:
                             'https://i.pinimg.com/originals/ab/e9/2f/abe92f535382cba9615e8767c21a6304.jpg'
-                            }/>
+                            }
+                            onClick={()=>{
+                                if(this.props.isMe)
+                                swal(
+                                    <div>
+                                        <div>Do you want to change your avatar?</div>
+                                        <FileBase64
+                                            multiple={ false }
+                                            onDone={ this.getFiles.bind(this) } />
+                                    </div>
+                                )
+                            }}/>
                     </div>
                 </div>
             </div>
@@ -158,5 +198,10 @@ CoverWall.propTypes = {
 
 };
 
+const mapStateToProps = state=>{
+    return {
+        account: state.account
+    }
+}
 
-export default connect()(withStyles(styles)(CoverWall));
+export default connect(mapStateToProps)(withStyles(styles)(CoverWall));
