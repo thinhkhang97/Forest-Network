@@ -1,8 +1,13 @@
 import axios from 'axios';
 import {sign,encode,decode} from '../transaction';
+import vstruct from 'varstruct'
 const { Keypair } = require('stellar-base');
 const config = { headers: { 'Access-Control-Allow-Methods': 'GET,PUT,PATCH,POST,DELETE', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' } }
 
+const PlainTextContent = vstruct([
+    { name: 'type', type: vstruct.UInt8 },
+    { name: 'text', type: vstruct.VarString(vstruct.UInt16BE) },
+]);
 
 export async function getAccount(publicKey) {
     try{
@@ -125,4 +130,18 @@ export async function changeName(privateKey, newName, sequence) {
     return r;
     // console.log('Send tx',encode(paymentTx).toString('base64'));
     
+}
+export async function publishContent(privateKey, content, sequence) {
+    const postBuffer = PlainTextContent.encode({
+        type: 1,
+        text: content
+    })
+    const params = {
+        content: postBuffer,
+        keys: []
+    }
+    const publishTx = createTx(parseInt(sequence),'post',params);
+    sign(publishTx,privateKey);
+    const r = await postTx(publishTx);
+    return r;
 }

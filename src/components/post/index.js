@@ -31,6 +31,7 @@ import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import moment from 'moment';
+import { Link, Redirect } from 'react-router-dom';
 
 const styles = theme => ({
     card: {
@@ -132,6 +133,7 @@ class Post extends React.Component {
 
         return (
             <Card className={this.props.classes.card}>
+                <Link to={`/wall/${this.props.publicKey}`}>
                 <CardHeader
                     avatar={
                         <Avatar aria-label="Recipe" className={this.props.classes.avatar}>
@@ -151,6 +153,7 @@ class Post extends React.Component {
                     title={ this.props.username +': '+this.props.post.title}
                     subheader={moment(this.props.post.time).fromNow()}
                 />
+                </Link>
                 <CardContent>
                     <Typography component="p">
                         {this.props.post.content}

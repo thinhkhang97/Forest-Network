@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 
 import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
+import {publishContent} from '../../services';
+import swal from 'sweetalert';
 
 const styles = theme => ({
     avatar: {
@@ -51,12 +53,12 @@ const styles = theme => ({
         backgroundColor: '#27aae1',
         borderRadius: 18,
         textTransform: 'capitalize',
-        marginLeft: 10,
-        marginRight: 10,
         '&:hover': {
             backgroundColor: '#2e6da4'
         },
         maxHeight: 21,
+        display: 'flex',
+        paddingBottom: 8
     },
     row: {
         display: 'flex',
@@ -73,6 +75,9 @@ const styles = theme => ({
 
 class PostInPut extends React.Component{
 
+    state={
+        content: ''
+    }
     render(){
         return (
             <div className={this.props.classes.row}>
@@ -81,12 +86,25 @@ class PostInPut extends React.Component{
                           className="form-control"
                           placeholder="Write what you wish" defaultValue={""}
                           style={{marginRight: 10}}
+                          value={this.state.content}
+                          onChange={(e)=>{
+                            this.setState({content: e.target.value})
+                          }}
                 />
-                <Fab className={this.props.classes.fab}>
-                    <ImageIcon/>
-                </Fab>
 
-                <Button variant='contained' color='primary' className={this.props.classes.primaryButton}>
+                <Button variant='contained' color='primary' className={this.props.classes.primaryButton}
+                    onClick={()=>{
+                        const pk = localStorage.getItem('privateKey');
+                        publishContent(pk,this.state.content,22).then(r=>{
+                            if(r.data.success==='OK') {
+                                swal('Great!!!','Publish successfully', 'success');
+                            }else {
+                                swal('Oops???','Publish fail','error');
+                            }
+                            this.setState({content: ''})
+                        })
+                    }}
+                >
                     Publish
                 </Button>
             </div>

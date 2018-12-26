@@ -13,7 +13,7 @@ import Icon from '@material-ui/core/Icon';
 import Line from '../../components/line';
 import { Link, Redirect } from 'react-router-dom';
 import Follow from "../../components/follow";
-import { getAccountInfomation, getAllNewsfeed, getSomeUserRecommend } from '../../services';
+import { getAccountInfomation, getAllNewsfeed, getSomeUserRecommend, getAccount } from '../../services';
 import ReactLoading from 'react-loading';
 import InfiniteScroll from 'react-infinite-scroller';
 const styles = theme => ({
@@ -47,6 +47,7 @@ class NewFeed extends React.Component {
         if (this.state.allPosts.length>0) {
             return this.state.allPosts.map(post => {
                 return <Post
+                    publicKey={post.publicKey}
                     username={post.username}
                     post={post}
                     imageBase64={post.avatar.data}
@@ -86,6 +87,17 @@ class NewFeed extends React.Component {
         this.setState({ isLoading: false });
     }
 
+    getListFollowing = async()=>{
+        const listFling = this.props.account.following
+        const listData = []
+        for(let i = 0; i < listFling.length; i++) {
+            const data = await getAccount(listFling[i].publicKey)
+            if(data)
+                listData.push(data);
+        }
+        if(listData.length>0)
+        return <Follow follows={listData} />
+    }
 
     checkIsLogin = () => {
         const pk = localStorage.getItem('privateKey');
@@ -147,11 +159,11 @@ class NewFeed extends React.Component {
                                             </Link>
                                         </div>
                                         {/* <div style={{ position: 'fixed', width: 251 }}>
-                                        <div>Following</div>
-                                        <div>
-                                            {this.getListFollows()}
-                                        </div>
-                                    </div> */}
+                                            <div>Following</div>
+                                            <div>
+                                                {this.getListFollowing()}
+                                            </div>
+                                        </div> */}
                                     </Grid>
                                     <Grid item xs={6} >
                                         <PostInPut />
