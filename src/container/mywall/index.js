@@ -181,7 +181,7 @@ class MyWall extends React.Component {
                             <div className={this.classes.partMid}>
                                 {this.props.match.params.page === 'edit-profile' ?
                                     <EditProfile /> : this.props.match.params.page === 'history'?
-                                    <History/> :
+                                    <History timeline={this.props.account?this.props.account.timeline:[]}/> :
                                     this.timeLine()}
                             </div>
                             <div className={this.classes.partRight}>

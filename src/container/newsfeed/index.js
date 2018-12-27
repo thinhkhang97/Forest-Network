@@ -47,17 +47,17 @@ class NewFeed extends React.Component {
     getListPosts = () => {
         if (this.state.allPosts.length>0) {
             return this.state.allPosts.map(post => {
-                return <Post
+                return <div>
+                    <Post
                     publicKey={post.publicKey}
                     username={post.username}
                     post={post}
                     imageBase64={post.avatar.data}
                 />
+                <Line/>
+                </div>
             })
         }
-        // return this.props.listPosts.map(post => {
-        //     return <Post post={post} />
-        // })
     }
 
     loadMoreData(page){
