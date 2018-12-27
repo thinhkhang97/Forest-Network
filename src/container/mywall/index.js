@@ -97,8 +97,9 @@ class MyWall extends React.Component {
             this.props.dispatch({ type: 'GET_INFO', data: accountData });
             this.setState({ isLogined: true })
         }
-        this.setState({ isLoading: false });
         await this.loadListFollowing();
+        this.setState({ isLoading: false });
+        
     }
 
     componentDidMount(){
@@ -184,11 +185,11 @@ class MyWall extends React.Component {
                                     this.timeLine()}
                             </div>
                             <div className={this.classes.partRight}>
-                                <div style={{textAlign: 'center'}}>Following</div>
+                                    <div style={{textAlign: 'center'}}>Following</div>
                                     <div style={{ overflow: 'auto' }}>
                                         {this.getListFollowing()}
                                     </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

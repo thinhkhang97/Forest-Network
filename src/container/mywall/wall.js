@@ -51,7 +51,8 @@ class Wall extends React.Component {
     privateKey = null;
     state = {
         isLoading: true,
-        isLogined: false
+        isLogined: false,
+        listFollowing: []
     }
 
     constructor(props) {
@@ -93,7 +94,27 @@ class Wall extends React.Component {
         else {
             this.props.dispatch({ type: 'GET_ACCOUNT_WALL', data: accountData });
         }
+        await this.loadListFollowing();
         this.setState({ isLoading: false });
+
+    }
+
+    getListFollowing = () => {
+        return <Follow follows={this.state.listFollowing} />
+    }
+
+    loadListFollowing = async()=>{
+        const listFling = this.props.wall.following
+        const listData = []
+        for(let i = 0; i < listFling.length; i++) {
+            const data = await getAccount(listFling[i].publicKey)
+            if(data)
+                listData.push(data);
+        }
+        if(listData.length>0){
+            console.log('LIST FOLLOWING', listData);
+            this.setState({listFollowing: listData});
+        }
     }
 
     componentDidMount() {
@@ -148,9 +169,10 @@ class Wall extends React.Component {
                                         null
                                 }
                                 isFollowing={
+                                    this.props.account ?
                                     this.props.account.following.find((o) => {
                                         return o.publicKey === this.props.wall.publicKey
-                                    })
+                                    }) : false
                                 }
                                 publicKey={this.props.wall.publicKey}
                             />
@@ -194,7 +216,10 @@ class Wall extends React.Component {
                                         <EditProfile /> : this.timeLine()}
                                 </div>
                                 <div className={this.classes.partRight}>
-                                    {/*part right*/}
+                                    <div style={{textAlign: 'center'}}>Following</div>
+                                    <div style={{ overflow: 'auto' }}>
+                                        {this.getListFollowing()}
+                                    </div>
                                 </div>
                             </div>
                         </div>
