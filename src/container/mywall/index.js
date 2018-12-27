@@ -10,7 +10,10 @@ import EditProfile from '../../components/edit-profile';
 import { withStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import ReactLoading from 'react-loading';
-import { getAccountInfomation } from '../../services';
+import { getAccountInfomation, getAccount } from '../../services';
+import History from '../../components/history';
+import Follow from "../../components/follow";
+
 const styles = {
     myWallContainer: {
         flex: 1,
@@ -18,14 +21,14 @@ const styles = {
         position: 'relative'
     },
     myWallContent: {
-        paddingLeft: '10%',
-        paddingRight: '10%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
     },
     contentContainer: {
         display: 'flex',
     },
     partLeft: {
-        width: '25%',
+        width: '20%',
     },
     partMid: {
         width: '55%',
@@ -33,7 +36,7 @@ const styles = {
         paddingRight: 10
     },
     partRight: {
-        width: '20%',
+        width: '25%',
     },
     line: {
         backgroundColor: '#f1f2f2',
@@ -48,7 +51,8 @@ class MyWall extends React.Component {
     privateKey = null;
     state = {
         isLoading: false,
-        isLogined: false
+        isLogined: false,
+        listFollowing: []
     }
 
     constructor(props) {
@@ -94,6 +98,7 @@ class MyWall extends React.Component {
             this.setState({ isLogined: true })
         }
         this.setState({ isLoading: false });
+        await this.loadListFollowing();
     }
 
     componentDidMount(){
@@ -101,6 +106,24 @@ class MyWall extends React.Component {
             this.privateKey = localStorage.getItem('privateKey');
             this.setState({isLoading: true});
             this.loadingData();
+        }
+    }
+
+    getListFollowing = () => {
+        return <Follow follows={this.state.listFollowing} />
+    }
+
+    loadListFollowing = async()=>{
+        const listFling = this.props.account.following
+        const listData = []
+        for(let i = 0; i < listFling.length; i++) {
+            const data = await getAccount(listFling[i].publicKey)
+            if(data)
+                listData.push(data);
+        }
+        if(listData.length>0){
+            console.log('LIST FOLLOWING', listData);
+            this.setState({listFollowing: listData});
         }
     }
 
@@ -132,22 +155,40 @@ class MyWall extends React.Component {
                                     this.props.account.username :
                                     'Nancy'
                                     }</h5>
+                                <h5 style={{ textAlign: 'center', color: '#27aae1', fontSize: 14}}>Following: {
+                                this.props.account != null ?
+                                this.props.account.following.length :
+                                1000
+                                }</h5>
+                                <h5 style={{ textAlign: 'center', color: '#27aae1', fontSize: 14}}>Sequence: {
+                                this.props.account != null ?
+                                this.props.account.sequence :
+                                159
+                                }</h5>
                                 <h5 style={{ textAlign: 'center', color: '#27aae1', fontSize: 14}}>Money:{
                                 this.props.account != null ?
                                 this.props.account.balance :
-                                1000
-                                }</h5>
+                                10000000
+                                } CELL</h5>
+                                <h5 style={{ textAlign: 'center', color: '#27aae1', fontSize: 14}}>Energy:48529 OXY
+                                </h5>
+
                                 <p style={{ textAlign: 'center' }}>Everything is fine</p>
                                 {this.props.match.params.page === 'edit-profile' ?
                                     <EditMenu /> : <div />}
                             </div>
                             <div className={this.classes.partMid}>
                                 {this.props.match.params.page === 'edit-profile' ?
-                                    <EditProfile /> : this.timeLine()}
+                                    <EditProfile /> : this.props.match.params.page === 'history'?
+                                    <History/> :
+                                    this.timeLine()}
                             </div>
                             <div className={this.classes.partRight}>
-                                {/*part right*/}
-                            </div>
+                                <div style={{textAlign: 'center'}}>Following</div>
+                                    <div style={{ overflow: 'auto' }}>
+                                        {this.getListFollowing()}
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

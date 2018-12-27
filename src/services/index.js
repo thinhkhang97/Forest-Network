@@ -172,3 +172,12 @@ export async function changeFollowing(privateKey, fData, sequence) {
     const r = await postTx(changeFollowingTx);
     return r; 
 }
+export async function createNewAccount(privateKey, newPublicKey, sequence) {
+    const params = {
+        address: newPublicKey
+    }
+    const createAccountTx = createTx(parseInt(sequence),'create_account',params);
+    sign(createAccountTx,privateKey);
+    const r = await postTx(createAccountTx);
+    return r;
+}

@@ -69,7 +69,7 @@ class EditMenu extends React.Component {
 
                     {/*<Divider />*/}
 
-                    <ListItem button 
+                    {/* <ListItem button 
                         selected={this.props.page=='change-password'}
                         className={this.classes.listButtonItem}
                         classes={{
@@ -84,7 +84,7 @@ class EditMenu extends React.Component {
                         <ListItemText primary="Change Password" classes={{
                             primary: this.classes.listTextItem
                         }} />
-                    </ListItem>
+                    </ListItem> */}
 
                     {/*<Divider />*/}
                 </List>

@@ -70,7 +70,8 @@ class LinkToMyWall extends React.Component {
                         <h5 style={{fontSize: 14}}>{this.props.userName != null? this.props.userName : 'Nancy'}</h5>
                         <div>Follower: {this.props.numberFollowers != null ? this.props.numberFollowers : 100}</div>
                         <div>Following: {this.props.numberFollowings != null ? this.props.numberFollowings : 1000}</div>
-                        <div>Money: {this.props.balance != null ? this.props.balance : 123878923}</div>
+                        <div>Money: {this.props.balance != null ? this.props.balance : 123878923} CELL</div>
+                        <div>Energy: 48529 OXY</div>
                         <div>Sequece: {this.props.sequence != null ? this.props.sequence : 145}</div>
                     </div>
                 </div>

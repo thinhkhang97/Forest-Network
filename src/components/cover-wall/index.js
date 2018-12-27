@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import swal from '@sweetalert/with-react';
 import FileBase64 from 'react-file-base64';
-import {changeImage, changeFollowing} from '../../services';
+import {changeImage, changeFollowing, createNewAccount} from '../../services';
 const base32 = require('base32.js');
 
 const styles = {
@@ -125,6 +125,30 @@ class CoverWall extends React.Component {
         this.setState({isFollowing: this.props.isFollowing})
     }
 
+    handleCreateNewAccount(){
+        swal({
+            text: 'Input public key of new account',
+            content: "input",
+            button: {
+                text: "Create!",
+                closeModal: false,
+            },
+        }).then(newPublicKey=>{
+            if(newPublicKey) {
+                const pk = localStorage.getItem('privateKey');
+                if(pk) {
+                    createNewAccount(pk, newPublicKey, this.props.account.sequence + 1).then(r => {
+                        if (r.data.success === 'OK') {
+                            swal('Great!!!', 'Create account successfully', 'success');
+                        } else {
+                            swal('Oops???', 'Create account fail', 'error');
+                        }
+                    })
+                }
+            }
+        })
+    }
+
     handleFollowing(){
         let curF=[]
         // Add following
@@ -187,9 +211,26 @@ class CoverWall extends React.Component {
                                         Edit profile
                                     </Button>
                                 </Link>
+                                <Link to='/mywall/history'>
+                                    <Button className={this.classes.button}
+                                    style={{visibility: this.props.isHidden? 'hidden':'visible'}}
+                                    onClick={()=>{
+                                        console.log('click');
+                                        this.props.dispatch({type:'GET_PAGE', page: 'history'})
+                                    }}>
+                                        All history
+                                    </Button>
+                                </Link>
                             </div>
                             <div className={this.classes.numberFollow}>
-                                {this.props.followers != null ? this.props.followers : 1000} followers
+                                {/* {this.props.followers != null ? this.props.followers : 1000} followers */}
+                                <Button 
+                                style={{visibility: !this.props.isMe?'hidden':'visible'}}
+                                variant='contained' color='primary' className={this.classes.primaryButton}
+                                onClick={()=>this.handleCreateNewAccount()}
+                                >
+                                    Create new account
+                                </Button>
                                 <Button 
                                 style={{visibility: this.props.isMe?'hidden':'visible'}}
                                 variant='contained' color='primary' className={this.classes.primaryButton}

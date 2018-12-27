@@ -63,13 +63,15 @@ class SignIn extends React.Component {
     }
 
     loading = () => {
-        return <ReactLoading type='spinningBubbles' color='#e5e5e5' height='20%' width='20%' />
+        return <div>
+            <ReactLoading type='spinningBubbles' color='#e5e5e5' height='20%' width='20%' />
+        </div>
     }
 
     loadingData = async ()=>{
         const accountData = await getAccountInfomation(this.state.privateKey);
         if(accountData === null) {
-            swal('Signed Fail', 'Please check your private key', 'error');
+            swal('Signed Fail', 'We couldnt find you account.Please check your private key', 'error');
             this.setState({isLoading: false});
         }
         else {
@@ -127,7 +129,16 @@ class SignIn extends React.Component {
                         </Paper>
 
                     </main>
-                    :<ReactLoading type='spinningBubbles' color='red' height='20%' width='20%' />
+                    :<div style={{
+                        width: '100vh',
+                        height: '100vh',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <ReactLoading type='spinningBubbles' color='red' height='20%' width='20%' />
+                    </div>
+                    
                 }
             </div>
         );
